@@ -17,7 +17,7 @@
 <meta property="og:description" content="基本问题： 介绍下 Java 内存区域（运行时数据区） Java 对象的创建过程（五步，能默写出来并且要知道每一步虚拟机做了什么） 对象的访问定位的两种方式（句柄和直接指针两种方式） String类和常量池 8种基本类型的包装类和常量池  1 概述对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像C/C++程序开发程序员这样为内一个 new 操作去写对应的 delete/free">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/27/16306a34cd8a4354?w=513&h=404&f=png&s=132068">
-<meta property="og:updated_time" content="2019-02-26T03:34:54.647Z">
+<meta property="og:updated_time" content="2019-02-26T03:38:21.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解虚拟机之Java内存区域">
 <meta name="twitter:description" content="基本问题： 介绍下 Java 内存区域（运行时数据区） Java 对象的创建过程（五步，能默写出来并且要知道每一步虚拟机做了什么） 对象的访问定位的两种方式（句柄和直接指针两种方式） String类和常量池 8种基本类型的包装类和常量池  1 概述对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像C/C++程序开发程序员这样为内一个 new 操作去写对应的 delete/free">
@@ -184,7 +184,7 @@
 <li><strong>String类和常量池</strong></li>
 <li><strong>8种基本类型的包装类和常量池</strong></li>
 </ul>
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像C/C++程序开发程序员这样为内一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。</p>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像C/C++程序开发程序员这样为内一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。<br><a id="more"></a></p>
 <h2 id="2-运行时数据区域"><a href="#2-运行时数据区域" class="headerlink" title="2 运行时数据区域"></a>2 运行时数据区域</h2><p>Java 虚拟机在执行 Java 程序的过程中会把它管理的内存划分成若干个不同的数据区域。<br><img src="https://user-gold-cdn.xitu.io/2018/4/27/16306a34cd8a4354?w=513&amp;h=404&amp;f=png&amp;s=132068" alt="运行时数据区域"></p>
 <p>这些组成部分一些是线程私有的，其他的则是线程共享的。线程私有的：程序计数器、虚拟机栈和本地方法栈；线程共享的：堆、方法区和直接内存。</p>
 <h3 id="2-1-程序计数器"><a href="#2-1-程序计数器" class="headerlink" title="2.1 程序计数器"></a>2.1 程序计数器</h3><p>程序计数器是一块较小的内存空间，可以看作是当前线程所执行的字节码的行号指示器。<strong>字节码解释器工作时通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等功能都需要依赖这个计数器来完。</strong></p>
@@ -390,18 +390,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/02/26/深入理解虚拟机之垃圾回收/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          �������������֮Java�ڴ�����
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/02/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2019/02/26/深入理解虚拟机之垃圾回收/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">深入理解虚拟机之Java内存区域</div>
       <i class="icon-circle-right"></i>
     </a>
   

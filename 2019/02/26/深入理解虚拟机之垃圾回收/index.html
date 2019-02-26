@@ -6,21 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://drunkenroger.github.io">
-  <title>�������������֮Java�ڴ����� | DrunkenRoger&#39;s 博客</title>
+  <title>深入理解虚拟机之Java内存区域 | DrunkenRoger&#39;s 博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="�������� ����ж϶����Ƿ����������ַ������� �򵥵Ľ���һ��ǿ���á������á������á������ã��������������ú������õ�����ʹ���������ܴ����ĺô����� ����ж�һ�������Ƿ������� ����ж�һ���������õ��� �����ռ�����Щ�㷨�����Ե��ص㣿 HotSpo">
+  <meta name="description" content="基本问题 如何判断对象是否死亡（两种方法）。 简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。 如何判断一个常量是废弃常量 如何判断一个类是无用的类 垃圾收集有哪些算法，各自的特点？ HotSpot为什么要分为新生代和老年代？ 常见的垃圾回收器有那些？ 介绍一下CMS,G1收集器。 Minor Gc和Full GC 有什么不同呢？  1 概述首">
 <meta name="keywords" content="jvm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="�������������֮Java�ڴ�����">
+<meta property="og:title" content="深入理解虚拟机之Java内存区域">
 <meta property="og:url" content="https://drunkenroger.github.io/2019/02/26/深入理解虚拟机之垃圾回收/index.html">
 <meta property="og:site_name" content="DrunkenRoger&#39;s 博客">
-<meta property="og:description" content="�������� ����ж϶����Ƿ����������ַ������� �򵥵Ľ���һ��ǿ���á������á������á������ã��������������ú������õ�����ʹ���������ܴ����ĺô����� ����ж�һ�������Ƿ������� ����ж�һ���������õ��� �����ռ�����Щ�㷨�����Ե��ص㣿 HotSpo">
+<meta property="og:description" content="基本问题 如何判断对象是否死亡（两种方法）。 简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。 如何判断一个常量是废弃常量 如何判断一个类是无用的类 垃圾收集有哪些算法，各自的特点？ HotSpot为什么要分为新生代和老年代？ 常见的垃圾回收器有那些？ 介绍一下CMS,G1收集器。 Minor Gc和Full GC 有什么不同呢？  1 概述首">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://camo.githubusercontent.com/05d1fe88e8ac4b03f299af3519b37e76ba4bebf3/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f382f32352f313635373033343461323963333433333f773d35393926683d32353026663d706e6726733d38393436">
-<meta property="og:updated_time" content="2019-02-26T03:35:15.351Z">
+<meta property="og:updated_time" content="2019-02-26T03:38:20.351Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="�������������֮Java�ڴ�����">
-<meta name="twitter:description" content="�������� ����ж϶����Ƿ����������ַ������� �򵥵Ľ���һ��ǿ���á������á������á������ã��������������ú������õ�����ʹ���������ܴ����ĺô����� ����ж�һ�������Ƿ������� ����ж�һ���������õ��� �����ռ�����Щ�㷨�����Ե��ص㣿 HotSpo">
+<meta name="twitter:title" content="深入理解虚拟机之Java内存区域">
+<meta name="twitter:description" content="基本问题 如何判断对象是否死亡（两种方法）。 简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。 如何判断一个常量是废弃常量 如何判断一个类是无用的类 垃圾收集有哪些算法，各自的特点？ HotSpot为什么要分为新生代和老年代？ 常见的垃圾回收器有那些？ 介绍一下CMS,G1收集器。 Minor Gc和Full GC 有什么不同呢？  1 概述首">
 <meta name="twitter:image" content="https://camo.githubusercontent.com/05d1fe88e8ac4b03f299af3519b37e76ba4bebf3/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f382f32352f313635373033343461323963333433333f773d35393926683d32353026663d706e6726733d38393436">
   
     <link rel="alternative" href="/atom.xml" title="DrunkenRoger&#39;s 博客" type="application/atom+xml">
@@ -164,7 +164,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      �������������֮Java�ڴ�����
+      深入理解虚拟机之Java内存区域
     </h1>
   
 
@@ -177,142 +177,142 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="��������"><a href="#��������" class="headerlink" title="��������"></a>��������</h2><ul>
-<li>����ж϶����Ƿ����������ַ�������</li>
-<li>�򵥵Ľ���һ��ǿ���á������á������á������ã��������������ú������õ�����ʹ���������ܴ����ĺô�����</li>
-<li>����ж�һ�������Ƿ�������</li>
-<li>����ж�һ���������õ���</li>
-<li>�����ռ�����Щ�㷨�����Ե��ص㣿</li>
-<li>HotSpotΪʲôҪ��Ϊ���������������</li>
-<li>��������������������Щ��</li>
-<li>����һ��CMS,G1�ռ�����</li>
-<li>Minor Gc��Full GC ��ʲô��ͬ�أ�</li>
+        <h2 id="基本问题"><a href="#基本问题" class="headerlink" title="基本问题"></a>基本问题</h2><ul>
+<li>如何判断对象是否死亡（两种方法）。</li>
+<li>简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。</li>
+<li>如何判断一个常量是废弃常量</li>
+<li>如何判断一个类是无用的类</li>
+<li>垃圾收集有哪些算法，各自的特点？</li>
+<li>HotSpot为什么要分为新生代和老年代？</li>
+<li>常见的垃圾回收器有那些？</li>
+<li>介绍一下CMS,G1收集器。</li>
+<li>Minor Gc和Full GC 有什么不同呢？</li>
 </ul>
-<h2 id="1-����"><a href="#1-����" class="headerlink" title="1 ����"></a>1 ����</h2><p>��������Ҫ���ǣ�</p>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>首先所需要考虑：</p>
 <ul>
-<li><p>��Щ������Ҫ���գ�</p>
+<li><p>那些垃圾需要回收？</p>
 </li>
-<li><p>ʲôʱ����գ�</p>
+<li><p>什么时候回收？</p>
 </li>
-<li><p>��λ��գ�</p>
+<li><p>如何回收？</p>
 </li>
 </ul>
-<p>����Ҫ�Ų�����ڴ�������⡢�������ռ���Ϊϵͳ�ﵽ���߲�����ƿ��ʱ�����Ǿ���Ҫ����Щ���Զ������ļ���ʵʩ��Ҫ�ļ�غ͵��ڡ�</p>
-<h2 id="2-JVM�ڴ���������"><a href="#2-JVM�ڴ���������" class="headerlink" title="2 JVM�ڴ���������"></a>2 JVM�ڴ���������</h2><p>Java ���Զ��ڴ������Ҫ����Զ����ڴ�Ļ��պͶ����ڴ�ķ��䡣ͬʱ��Java �Զ��ڴ��������ĵĹ����� <strong>��</strong> �ڴ��ж���ķ�������ա�</p>
-<p><strong>JDK1.8֮ǰ</strong>�Ķ��ڴ�ʾ��ͼ��</p>
+<p>当需要排查各种内存溢出问题、当垃圾收集成为系统达到更高并发的瓶颈时，我们就需要对这些“自动化”的技术实施必要的监控和调节。<br><a id="more"></a></p>
+<h2 id="2-JVM内存分配与回收"><a href="#2-JVM内存分配与回收" class="headerlink" title="2 JVM内存分配与回收"></a>2 JVM内存分配与回收</h2><p>Java 的自动内存管理主要是针对对象内存的回收和对象内存的分配。同时，Java 自动内存管理最核心的功能是 <strong>堆</strong> 内存中对象的分配与回收。</p>
+<p><strong>JDK1.8之前</strong>的堆内存示意图：</p>
 <p><a href="https://camo.githubusercontent.com/05d1fe88e8ac4b03f299af3519b37e76ba4bebf3/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f382f32352f313635373033343461323963333433333f773d35393926683d32353026663d706e6726733d38393436" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/05d1fe88e8ac4b03f299af3519b37e76ba4bebf3/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f382f32352f313635373033343461323963333433333f773d35393926683d32353026663d706e6726733d38393436" alt></a></p>
-<p>����ͼ���Կ������ڴ��Ϊ������������������ô����������ֱ���һ����Ϊ��Eden ����Survivor1 ����Survivor2 ����ֵ��ע����ǣ��� JDK 1.8���Ƴ��������ô���ȡ����֮����һ����Ԫ�ռ䣨Metaspace�����������ô�ʹ�õ���JVM�Ķ��ڴ�ռ䣬��Ԫ�ռ�ʹ�õ��������ڴ棬ֱ���ܵ������������ڴ����ƣ���</p>
-<h3 id="2-1-����������eden������"><a href="#2-1-����������eden������" class="headerlink" title="2.1 ����������eden������"></a>2.1 ����������eden������</h3><p>Ŀǰ�����������ռ���������÷ִ������㷨�������Ҫ�����ڴ��Ϊ����������������������ǾͿ��Ը��ݸ���������ص�ѡ����ʵ������ռ��㷨��</p>
-<p>���������£��������������� eden �����䡣�� eden ��û���㹻�ռ���з���ʱ�������������һ��Minor GC.��������������ʵ�ʲ������¡�</p>
-<p><strong>Minor GC��Full GC ��ʲô��ͬ�أ�</strong></p>
+<p>从上图可以看出堆内存分为新生代、老年代和永久代。新生代又被进一步分为：Eden 区＋Survivor1 区＋Survivor2 区。值得注意的是，在 JDK 1.8中移除整个永久代，取而代之的是一个叫元空间（Metaspace）的区域（永久代使用的是JVM的堆内存空间，而元空间使用的是物理内存，直接受到本机的物理内存限制）。</p>
+<h3 id="2-1-对象优先在eden区分配"><a href="#2-1-对象优先在eden区分配" class="headerlink" title="2.1 对象优先在eden区分配"></a>2.1 对象优先在eden区分配</h3><p>目前主流的垃圾收集器都会采用分代回收算法，因此需要将堆内存分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。</p>
+<p>大多数情况下，对象在新生代中 eden 区分配。当 eden 区没有足够空间进行分配时，虚拟机将发起一次Minor GC.下面我们来进行实际测试以下。</p>
+<p><strong>Minor GC和Full GC 有什么不同呢？</strong></p>
 <ul>
-<li><strong>������GC��Minor GC��</strong>:ָ�����������ĵ������ռ�������Minor GC�ǳ�Ƶ���������ٶ�һ��Ҳ�ȽϿ졣</li>
-<li><strong>�����GC��Major GC/Full GC��</strong>:ָ�������������GC��������Major GC�������������һ�ε�Minor GC�����Ǿ��ԣ���Major GC���ٶ�һ����Minor GC����10�����ϡ�</li>
+<li><strong>新生代GC（Minor GC）</strong>:指发生新生代的的垃圾收集动作，Minor GC非常频繁，回收速度一般也比较快。</li>
+<li><strong>老年代GC（Major GC/Full GC）</strong>:指发生在老年代的GC，出现了Major GC经常会伴随至少一次的Minor GC（并非绝对），Major GC的速度一般会比Minor GC的慢10倍以上。</li>
 </ul>
-<h3 id="2-2-�����ֱ�ӽ��������"><a href="#2-2-�����ֱ�ӽ��������" class="headerlink" title="2.2 �����ֱ�ӽ��������"></a>2.2 �����ֱ�ӽ��������</h3><p>����������Ҫ���������ڴ�ռ�Ķ��󣨱��磺�ַ��������飩��</p>
-<p><strong>ΪʲôҪ�����أ�</strong></p>
-<p>Ϊ�˱���Ϊ���������ڴ�ʱ���ڷ��䵣�����ƴ����ĸ��ƶ�����Ч�ʡ�</p>
-<h3 id="2-3-���ڴ��K��󽫽��������"><a href="#2-3-���ڴ��K��󽫽��������" class="headerlink" title="2.3 ���ڴ��Ķ��󽫽��������"></a>2.3 ���ڴ��Ķ��󽫽��������</h3><p>��Ȼ����������˷ִ��ռ���˼���������ڴ棬��ô�ڴ����ʱ�ͱ�����ʶ����Щ����Ӧ��������������Щ����Ӧ����������С�Ϊ��������һ�㣬�������ÿ������һ���������䣨Age����������</p>
-<p>��������� Eden ������������һ�� Minor GC ����Ȼ�ܹ��������ܱ� Survivor ���ɵĻ��������ƶ��� Survivor �ռ��У���������������Ϊ1.������ Survivor ��ÿ����һ�� MinorGC,���������1�꣬�������������ӵ�һ���̶ȣ�Ĭ��Ϊ15�꣩���ͻᱻ������������С�����������������������ֵ������ͨ������ <code>-XX:MaxTenuringThreshold</code> �����á�</p>
-<h3 id="2-4-��̬���������ж�"><a href="#2-4-��̬���������ж�" class="headerlink" title="2.4 ��̬���������ж�"></a>2.4 ��̬���������ж�</h3><p>Ϊ�˸��õ���Ӧ��ͬ������ڴ�����������������ԶҪ������������ﵽ��ĳ��ֵ���ܽ������������� Survivor �ռ�����ͬ�������ж����С���ܺʹ��� Survivor �ռ��һ�룬������ڻ���ڸ�����Ķ���Ϳ���ֱ�ӽ��������������ﵽҪ������䡣</p>
-<h2 id="3-�����Ѿ�������"><a href="#3-�����Ѿ�������" class="headerlink" title="3 �����Ѿ�������"></a>3 �����Ѿ�������</h2><p>���м����������еĶ���ʵ�����Զ���������ǰ�ĵ�һ������Ҫ�ж���Щ�����Ѿ��������������ٱ��κ�;��ʹ�õĶ��󣩡�</p>
-<h3 id="3-1-���u�����"><a href="#3-1-���u�����" class="headerlink" title="3.1 ���ü�����"></a>3.1 ���ü�����</h3><p>������������һ�����ü�������ÿ����һ���ط����������������ͼ�1��������ʧЧ���������ͼ�1���κ�ʱ�������Ϊ0�Ķ�����ǲ������ٱ�ʹ�õġ�</p>
-<p><strong>�������ʵ�ּ򵥣�Ч�ʸߣ�����Ŀǰ������������в�û��ѡ������㷨�������ڴ棬������Ҫ��ԭ���������ѽ������֮���໥ѭ�����õ����⡣</strong> ��ν����֮����໥�������⣬�����������ʾ�����˶���objA �� objB �໥�����ŶԷ�֮�⣬����������֮�������κ����á�����������Ϊ�������öԷ����������ǵ����ü���������Ϊ0���������ü����㷨�޷�֪ͨ GC �������������ǡ�</p>
+<h3 id="2-2-大对象直接进入老年代"><a href="#2-2-大对象直接进入老年代" class="headerlink" title="2.2 大对象直接进入老年代"></a>2.2 大对象直接进入老年代</h3><p>大对象就是需要大量连续内存空间的对象（比如：字符串、数组）。</p>
+<p><strong>为什么要这样呢？</strong></p>
+<p>为了避免为大对象分配内存时由于分配担保机制带来的复制而降低效率。</p>
+<h3 id="2-3-长期存活的对象将进入老年代"><a href="#2-3-长期存活的对象将进入老年代" class="headerlink" title="2.3 长期存活的对象将进入老年代"></a>2.3 长期存活的对象将进入老年代</h3><p>既然虚拟机采用了分代收集的思想来管理内存，那么内存回收时就必须能识别哪些对象应放在新生代，哪些对象应放在老年代中。为了做到这一点，虚拟机给每个对象一个对象年龄（Age）计数器。</p>
+<p>如果对象在 Eden 出生并经过第一次 Minor GC 后仍然能够存活，并且能被 Survivor 容纳的话，将被移动到 Survivor 空间中，并将对象年龄设为1.对象在 Survivor 中每熬过一次 MinorGC,年龄就增加1岁，当它的年龄增加到一定程度（默认为15岁），就会被晋升到老年代中。对象晋升到老年代的年龄阈值，可以通过参数 <code>-XX:MaxTenuringThreshold</code> 来设置。</p>
+<h3 id="2-4-动态对象年龄判定"><a href="#2-4-动态对象年龄判定" class="headerlink" title="2.4 动态对象年龄判定"></a>2.4 动态对象年龄判定</h3><p>为了更好的适应不同程序的内存情况，虚拟机不是永远要求对象年龄必须达到了某个值才能进入老年代，如果 Survivor 空间中相同年龄所有对象大小的总和大于 Survivor 空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代，无需达到要求的年龄。</p>
+<h2 id="3-对象已经死亡？"><a href="#3-对象已经死亡？" class="headerlink" title="3 对象已经死亡？"></a>3 对象已经死亡？</h2><p>堆中几乎放着所有的对象实例，对堆垃圾回收前的第一步就是要判断那些对象已经死亡（即不能再被任何途径使用的对象）。</p>
+<h3 id="3-1-引用计数法"><a href="#3-1-引用计数法" class="headerlink" title="3.1 引用计数法"></a>3.1 引用计数法</h3><p>给对象中添加一个引用计数器，每当有一个地方引用它，计数器就加1；当引用失效，计数器就减1；任何时候计数器为0的对象就是不可能再被使用的。</p>
+<p><strong>这个方法实现简单，效率高，但是目前主流的虚拟机中并没有选择这个算法来管理内存，其最主要的原因是它很难解决对象之间相互循环引用的问题。</strong> 所谓对象之间的相互引用问题，如下面代码所示：除了对象objA 和 objB 相互引用着对方之外，这两个对象之间再无任何引用。但是他们因为互相引用对方，导致它们的引用计数器都不为0，于是引用计数算法无法通知 GC 回收器回收他们。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class ReferenceCountingGc &#123;</span><br><span class="line">    Object instance = null;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ReferenceCountingGc objA = new ReferenceCountingGc();</span><br><span class="line">        ReferenceCountingGc objB = new ReferenceCountingGc();</span><br><span class="line">        objA.instance = objB;</span><br><span class="line">        objB.instance = objA;</span><br><span class="line">        objA = null;</span><br><span class="line">        objB = null;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="3-2-�ɴ��Է����㷨"><a href="#3-2-�ɴ��Է����㷨" class="headerlink" title="3.2 �ɴ��Է����㷨"></a>3.2 �ɴ��Է����㷨</h3><p>����㷨�Ļ���˼�����ͨ��һϵ�еĳ�Ϊ <strong>��GC Roots��</strong> �Ķ�����Ϊ��㣬����Щ�ڵ㿪ʼ�����������ڵ����߹���·����Ϊ����������һ������ GC Roots û���κ������������Ļ�����֤���˶����ǲ����õġ�</p>
-<h3 id="3-3-��̸����"><a href="#3-3-��̸����" class="headerlink" title="3.3 ��̸����"></a>3.3 ��̸����</h3><p>������ͨ�����ü������ж϶�����������������ͨ���ɴ��Է������ж϶�����������Ƿ�ɴ�ж�����Ĵ��롰���á��йء�</p>
-<p>JDK1.2֮ǰ��Java�����õĶ���ܴ�ͳ�����reference���͵����ݴ洢����ֵ����������һ���ڴ����ʼ��ַ���ͳ�����ڴ����һ�����á�</p>
-<p>JDK1.2�Ժ�Java�����õĸ�����������䣬�����÷�Ϊǿ���á������á������á����������֣�����ǿ���𽥼�����</p>
-<p><strong>1��ǿ����</strong></p>
-<p>��ǰ����ʹ�õĴ󲿷�����ʵ���϶���ǿ���ã�����ʹ�����ձ�����á����һ���������ǿ���ã��Ǿ�������<strong>�ز����ٵ�������Ʒ</strong>����������������������������ڴ�� �䲻�㣬Java�������Ը�׳�OutOfMemoryError����ʹ�����쳣��ֹ��Ҳ���῿������վ���ǿ���õĶ���������ڴ治�����⡣</p>
-<p><strong>2�������ã�SoftReference��</strong></p>
-<p>���һ������ֻ���������ã��Ǿ�������<strong>���п��޵�������Ʒ</strong>������ڴ�ռ��㹻�������������Ͳ��������������ڴ�ռ䲻���ˣ��ͻ������Щ������ڴ档ֻҪ����������û�л��������ö���Ϳ��Ա�����ʹ�á������ÿ�����ʵ���ڴ����еĸ��ٻ��档</p>
-<p>�����ÿ��Ժ�һ�����ö��У�ReferenceQueue������ʹ�ã���������������õĶ����������գ�JAVA������ͻ����������ü��뵽��֮���������ö����С�</p>
-<p><strong>3�������ã�WeakReference��</strong></p>
-<p>���һ������ֻ���������ã��Ǿ�������<strong>���п��޵�������Ʒ</strong>���������������õ��������ڣ�ֻ���������õĶ���ӵ�и����ݵ��������ڡ��������������߳�ɨ��������Ͻ���ڴ�����Ĺ����У�һ��������ֻ���������õĶ��󣬲��ܵ�ǰ�ڴ�ռ��㹻��񣬶�����������ڴ档����������������������һ�����ȼ��ܵ͵��̣߳� ��˲�һ����ܿ췢����Щֻ���������õĶ���</p>
-<p>�����ÿ��Ժ�һ�����ö��У�ReferenceQueue������ʹ�ã���������������õĶ����������գ�Java������ͻ����������ü��뵽��֮���������ö����С�</p>
-<p><strong>4�������ã�PhantomReference��</strong></p>
-<p>“������”����˼�壬������ͬ���裬�������������ö���ͬ�������ò��������������������ڡ����һ����������������ã���ô���ͺ�û���κ�����һ�������κ�ʱ�򶼿��ܱ��������ա�</p>
-<p><strong>��������Ҫ�������ٶ����������յĻ</strong>��</p>
-<p><strong>�������������ú������õ�һ���������ڣ�</strong> �����ñ�������ö��У�ReferenceQueue������ʹ�á�������������׼������һ������ʱ��������������������ã��ͻ��ڻ��ն�����ڴ�֮ǰ������������ü��뵽��֮���������ö����С��������ͨ���ж����ö������Ƿ��Ѿ������������ã����˽ⱻ���õĶ����Ƿ�Ҫ���������ա������������ĳ���������Ѿ������뵽���ö��У���ô�Ϳ����������õĶ�����ڴ汻����֮ǰ��ȡ��Ҫ���ж���</p>
-<p>�ر�ע�⣬�ڳ��������һ�����ʹ���������������ã�ʹ�������õ�����϶࣬������Ϊ<strong>�����ÿ��Լ���JVM�������ڴ�Ļ����ٶȣ�����ά��ϵͳ�����а�ȫ����ֹ�ڴ������OutOfMemory��������Ĳ���</strong>��</p>
-<h3 id="3-4-���ɴ�K��󲢷a��������ɡ�"><a href="#3-4-���ɴ�K��󲢷a��������ɡ�" class="headerlink" title="3.4 ���ɴ�Ķ��󲢷ǡ��������ɡ�"></a>3.4 ���ɴ�Ķ��󲢷ǡ��������ɡ�</h3><p>��ʹ�ڿɴ��Է������в��ɴ�Ķ���Ҳ�����ǡ��������ɡ��ģ���ʱ��������ʱ���ڡ����̽׶Ρ���Ҫ��������һ����������������Ҫ�������α�ǹ��̣��ɴ��Է������в��ɴ�Ķ��󱻵�һ�α�ǲ��ҽ���һ��ɸѡ��ɸѡ�������Ǵ˶����Ƿ��б�Ҫִ�� finalize ������������û�и��� finalize �������� finalize �����Ѿ�����������ù�ʱ��������������������Ϊû�б�Ҫִ�С�</p>
-<p>���ж�Ϊ��Ҫִ�еĶ��󽫻ᱻ����һ�������н��еڶ��α�ǣ���������������������ϵ��κ�һ������������������ͻᱻ��Ļ��ա�</p>
-<h3 id="3-5-����ж�һ�������Ƿ�������"><a href="#3-5-����ж�һ�������Ƿ�������" class="headerlink" title="3.5 ����ж�һ�������Ƿ�������"></a>3.5 ����ж�һ�������Ƿ�������</h3><p>����ʱ��������Ҫ���յ��Ƿ����ĳ�������ô����������ж�һ�������Ƿ��������أ�</p>
-<p>�����ڳ������д����ַ��� “abc”�������ǰû���κ�String�������ø��ַ��������Ļ�����˵������ “abc” ���Ƿ��������������ʱ�����ڴ���յĻ������б�Ҫ�Ļ���”abc” �ͻᱻϵͳ�����������ء�</p>
-<p>ע�⣺JDK1.7��֮��汾�� JVM �Ѿ�������ʱ�����شӷ����������˳������� Java �ѣ�Heap���п�����һ������������ʱ�����ء�</p>
-<h3 id="3-6-����ж�һ���������o���"><a href="#3-6-����ж�һ���������o���" class="headerlink" title="3.6 ����ж�һ���������õ���"></a>3.6 ����ж�һ���������õ���</h3><p>��������Ҫ���յ������õ��࣬��ô����ж�һ���������õ�����أ�</p>
-<p>�ж�һ�������Ƿ��ǡ������������Ƚϼ򵥣���Ҫ�ж�һ�����Ƿ��ǡ����õ��ࡱ����������Կ������ࡣ����Ҫͬʱ��������3�������������� <strong>�����õ��ࡱ</strong> ��</p>
+<h3 id="3-2-可达性分析算法"><a href="#3-2-可达性分析算法" class="headerlink" title="3.2 可达性分析算法"></a>3.2 可达性分析算法</h3><p>这个算法的基本思想就是通过一系列的称为 <strong>“GC Roots”</strong> 的对象作为起点，从这些节点开始向下搜索，节点所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用链相连的话，则证明此对象是不可用的。</p>
+<h3 id="3-3-再谈引用"><a href="#3-3-再谈引用" class="headerlink" title="3.3 再谈引用"></a>3.3 再谈引用</h3><p>无论是通过引用计数法判断对象引用数量，还是通过可达性分析法判断对象的引用链是否可达，判定对象的存活都与“引用”有关。</p>
+<p>JDK1.2之前，Java中引用的定义很传统：如果reference类型的数据存储的数值代表的是另一块内存的起始地址，就称这块内存代表一个引用。</p>
+<p>JDK1.2以后，Java对引用的概念进行了扩充，将引用分为强引用、软引用、弱引用、虚引用四种（引用强度逐渐减弱）</p>
+<p><strong>1．强引用</strong></p>
+<p>以前我们使用的大部分引用实际上都是强引用，这是使用最普遍的引用。如果一个对象具有强引用，那就类似于<strong>必不可少的生活用品</strong>，垃圾回收器绝不会回收它。当内存空 间不足，Java虚拟机宁愿抛出OutOfMemoryError错误，使程序异常终止，也不会靠随意回收具有强引用的对象来解决内存不足问题。</p>
+<p><strong>2．软引用（SoftReference）</strong></p>
+<p>如果一个对象只具有软引用，那就类似于<strong>可有可无的生活用品</strong>。如果内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存。只要垃圾回收器没有回收它，该对象就可以被程序使用。软引用可用来实现内存敏感的高速缓存。</p>
+<p>软引用可以和一个引用队列（ReferenceQueue）联合使用，如果软引用所引用的对象被垃圾回收，JAVA虚拟机就会把这个软引用加入到与之关联的引用队列中。</p>
+<p><strong>3．弱引用（WeakReference）</strong></p>
+<p>如果一个对象只具有弱引用，那就类似于<strong>可有可无的生活用品</strong>。弱引用与软引用的区别在于：只具有弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。不过，由于垃圾回收器是一个优先级很低的线程， 因此不一定会很快发现那些只具有弱引用的对象。</p>
+<p>弱引用可以和一个引用队列（ReferenceQueue）联合使用，如果弱引用所引用的对象被垃圾回收，Java虚拟机就会把这个弱引用加入到与之关联的引用队列中。</p>
+<p><strong>4．虚引用（PhantomReference）</strong></p>
+<p>“虚引用”顾名思义，就是形同虚设，与其他几种引用都不同，虚引用并不会决定对象的生命周期。如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在任何时候都可能被垃圾回收。</p>
+<p><strong>虚引用主要用来跟踪对象被垃圾回收的活动</strong>。</p>
+<p><strong>虚引用与软引用和弱引用的一个区别在于：</strong> 虚引用必须和引用队列（ReferenceQueue）联合使用。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。程序如果发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。</p>
+<p>特别注意，在程序设计中一般很少使用弱引用与虚引用，使用软引用的情况较多，这是因为<strong>软引用可以加速JVM对垃圾内存的回收速度，可以维护系统的运行安全，防止内存溢出（OutOfMemory）等问题的产生</strong>。</p>
+<h3 id="3-4-不可达的对象并非“非死不可”"><a href="#3-4-不可达的对象并非“非死不可”" class="headerlink" title="3.4 不可达的对象并非“非死不可”"></a>3.4 不可达的对象并非“非死不可”</h3><p>即使在可达性分析法中不可达的对象，也并非是“非死不可”的，这时候它们暂时处于“缓刑阶段”，要真正宣告一个对象死亡，至少要经历两次标记过程；可达性分析法中不可达的对象被第一次标记并且进行一次筛选，筛选的条件是此对象是否有必要执行 finalize 方法。当对象没有覆盖 finalize 方法，或 finalize 方法已经被虚拟机调用过时，虚拟机将这两种情况视为没有必要执行。</p>
+<p>被判定为需要执行的对象将会被放在一个队列中进行第二次标记，除非这个对象与引用链上的任何一个对象建立关联，否则就会被真的回收。</p>
+<h3 id="3-5-如何判断一个常量是废弃常量"><a href="#3-5-如何判断一个常量是废弃常量" class="headerlink" title="3.5 如何判断一个常量是废弃常量"></a>3.5 如何判断一个常量是废弃常量</h3><p>运行时常量池主要回收的是废弃的常量。那么，我们如何判断一个常量是废弃常量呢？</p>
+<p>假如在常量池中存在字符串 “abc”，如果当前没有任何String对象引用该字符串常量的话，就说明常量 “abc” 就是废弃常量，如果这时发生内存回收的话而且有必要的话，”abc” 就会被系统清理出常量池。</p>
+<p>注意：JDK1.7及之后版本的 JVM 已经将运行时常量池从方法区中移了出来，在 Java 堆（Heap）中开辟了一块区域存放运行时常量池。</p>
+<h3 id="3-6-如何判断一个类是无用的类"><a href="#3-6-如何判断一个类是无用的类" class="headerlink" title="3.6 如何判断一个类是无用的类"></a>3.6 如何判断一个类是无用的类</h3><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
+<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面3个条件才能算是 <strong>“无用的类”</strong> ：</p>
 <ul>
-<li>�������е�ʵ�����Ѿ������գ�Ҳ���� Java ���в����ڸ�����κ�ʵ����</li>
-<li>���ظ���� ClassLoader �Ѿ������ա�</li>
-<li>�����Ӧ�� java.lang.Class ����û�����κεط������ã��޷����κεط�ͨ��������ʸ���ķ�����</li>
+<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
+<li>加载该类的 ClassLoader 已经被回收。</li>
+<li>该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
 </ul>
-<p>��������Զ���������3����������������л��գ�����˵�Ľ����ǡ����ԡ����������ǺͶ���һ����ʹ���˾ͻ��Ȼ�����ա�</p>
-<h2 id="4-�����ռ��㷨"><a href="#4-�����ռ��㷨" class="headerlink" title="4 �����ռ��㷨"></a>4 �����ռ��㷨</h2><h3 id="4-1-���-����㷨"><a href="#4-1-���-����㷨" class="headerlink" title="4.1 ���-����㷨"></a>4.1 ���-����㷨</h3><p>�㷨��Ϊ����ǡ��͡�������׶Σ����ȱ�ǳ�������Ҫ���յĶ����ڱ����ɺ�ͳһ�������б���ǵĶ���������������ռ��㷨��Ч��Ҳ�ܸߣ����ǻ�����������Ե����⣺</p>
+<p>虚拟机可以对满足上述3个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
+<h2 id="4-垃圾收集算法"><a href="#4-垃圾收集算法" class="headerlink" title="4 垃圾收集算法"></a>4 垃圾收集算法</h2><h3 id="4-1-标记-清除算法"><a href="#4-1-标记-清除算法" class="headerlink" title="4.1 标记-清除算法"></a>4.1 标记-清除算法</h3><p>算法分为“标记”和“清除”阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。它是最基础的收集算法，效率也很高，但是会带来两个明显的问题：</p>
 <ol>
-<li><strong>Ч������</strong></li>
-<li><strong>�ռ����⣨��������������������������Ƭ��</strong></li>
+<li><strong>效率问题</strong></li>
+<li><strong>空间问题（标记清除后会产生大量不连续的碎片）</strong></li>
 </ol>
-<h3 id="4-2-�����㷨"><a href="#4-2-�����㷨" class="headerlink" title="4.2 �����㷨"></a>4.2 �����㷨</h3><p>Ϊ�˽��Ч�����⣬�����ơ��ռ��㷨�����ˡ������Խ��ڴ��Ϊ��С��ͬ�����飬ÿ��ʹ�����е�һ�顣����һ����ڴ�ʹ����󣬾ͽ������Ķ����Ƶ���һ��ȥ��Ȼ���ٰ�ʹ�õĿռ�һ����������������ʹÿ�ε��ڴ���ն��Ƕ��ڴ������һ����л��ա�</p>
-<h3 id="4-3-���-�����㷨"><a href="#4-3-���-�����㷨" class="headerlink" title="4.3 ���-�����㷨"></a>4.3 ���-�����㷨</h3><p>������������ص������һ�ֱ���㷨����ǹ�����Ȼ�롰���-������㷨һ�������������費��ֱ�ӶԿɻ��ն�����գ����������д��Ķ�����һ���ƶ���Ȼ��ֱ���������˱߽�������ڴ档</p>
-<h3 id="4-4-�ִ��ռ��㷨"><a href="#4-4-�ִ��ռ��㷨" class="headerlink" title="4.4 �ִ��ռ��㷨"></a>4.4 �ִ��ռ��㷨</h3><p>��ǰ������������ռ������÷ִ��ռ��㷨�������㷨û��ʲô�µ�˼�룬ֻ�Ǹ��ݶ��������ڵĲ�ͬ���ڴ��Ϊ���顣һ�㽫java�ѷ�Ϊ����������������������ǾͿ��Ը��ݸ���������ص�ѡ����ʵ������ռ��㷨��</p>
-<p><strong>�������������У�ÿ���ռ������д���������ȥ�����Կ���ѡ�����㷨��ֻ��Ҫ������������ĸ��Ƴɱ��Ϳ������ÿ�������ռ�����������Ķ�������ǱȽϸߵģ�����û�ж���Ŀռ�������з��䵣�����������Ǳ���ѡ�񡰱��-������򡰱��-�������㷨���������ռ���</strong></p>
-<p><strong>�������⣺</strong> HotSpotΪʲôҪ��Ϊ���������������</p>
-<p>��������ĶԷִ��ռ��㷨�Ľ��ܻش�</p>
-<h2 id="5-�����ռ���"><a href="#5-�����ռ���" class="headerlink" title="5 �����ռ���"></a>5 �����ռ���</h2><p><strong>���˵�ռ��㷨���ڴ���յķ����ۣ���ô�����ռ��������ڴ���յľ���ʵ�֡�</strong></p>
-<p>��Ȼ���ǶԸ����ռ������бȽϣ�������Ҫ��ѡ��һ����õ��ռ�������Ϊ֪������Ϊֹ��û����õ������ռ������֣�����û�����ܵ������ռ�����<strong>���������ľ��Ǹ��ݾ���Ӧ�ó���ѡ���ʺ��Լ��������ռ���</strong>������һ�£������һ���ĺ�֮�ڡ��κγ����¶����õ������ռ������ڣ���ô���ǵ�HotSpot������Ͳ���ʵ����ô�಻ͬ�������ռ����ˡ�</p>
-<h3 id="5-1-Serial�ռ���"><a href="#5-1-Serial�ռ���" class="headerlink" title="5.1 Serial�ռ���"></a>5.1 Serial�ռ���</h3><p>Serial�����У��ռ��������������ʷ���ƾõ������ռ����ˡ���ҿ����־�֪������ռ�����һ�����߳��ռ����ˡ����� <strong>�����̡߳�</strong> �����岻������ζ����ֻ��ʹ��һ�������ռ��߳�ȥ��������ռ�����������Ҫ�������ڽ��������ռ�������ʱ�������ͣ�������еĹ����̣߳� <strong>“Stop The World”</strong> ����ֱ�����ռ�������</p>
-<p><strong>���������ø����㷨����������ñ��-�����㷨��</strong></p>
-<p>�������������ǵ�Ȼ֪��Stop The World�����Ĳ����û����飬�����ں����������ռ��������ͣ��ʱ���ڲ������̣���Ȼ����ͣ�٣�Ѱ��������������ռ����Ĺ�����Ȼ�ڼ�������</p>
-<p>����Serial�ռ�����û���������������ռ����ĵط��أ���Ȼ�У���<strong>�򵥶���Ч���������ռ����ĵ��߳���ȣ�</strong>��Serial�ռ�������û���߳̽����Ŀ�������Ȼ���Ի�úܸߵĵ��߳��ռ�Ч�ʡ�Serial�ռ�������������Clientģʽ�µ��������˵�Ǹ�������ѡ��</p>
-<h3 id="5-2-ParNew�ռ���"><a href="#5-2-ParNew�ռ���" class="headerlink" title="5.2 ParNew�ռ���"></a>5.2 ParNew�ռ���</h3><p><strong>ParNew�ռ�����ʵ����Serial�ռ����Ķ��̰߳汾������ʹ�ö��߳̽��������ռ��⣬������Ϊ�����Ʋ������ռ��㷨�����ղ��Եȵȣ���Serial�ռ�����ȫһ����</strong></p>
-<p><strong>���������ø����㷨����������ñ��-�����㷨��</strong></p>
-<p>��������������Serverģʽ�µ����������Ҫѡ�񣬳���Serial�ռ����⣬ֻ��������CMS�ռ��������������ϵĲ����ռ������������ܵ�����Ϲ�����</p>
-<p><strong>���кͲ�������䣺</strong></p>
+<h3 id="4-2-复制算法"><a href="#4-2-复制算法" class="headerlink" title="4.2 复制算法"></a>4.2 复制算法</h3><p>为了解决效率问题，“复制”收集算法出现了。它可以将内存分为大小相同的两块，每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉。这样就使每次的内存回收都是对内存区间的一半进行回收。</p>
+<h3 id="4-3-标记-整理算法"><a href="#4-3-标记-整理算法" class="headerlink" title="4.3 标记-整理算法"></a>4.3 标记-整理算法</h3><p>根据老年代的特点提出的一种标记算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象回收，而是让所有存活的对象向一端移动，然后直接清理掉端边界以外的内存。</p>
+<h3 id="4-4-分代收集算法"><a href="#4-4-分代收集算法" class="headerlink" title="4.4 分代收集算法"></a>4.4 分代收集算法</h3><p>当前虚拟机的垃圾收集都采用分代收集算法，这种算法没有什么新的思想，只是根据对象存活周期的不同将内存分为几块。一般将java堆分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。</p>
+<p><strong>比如在新生代中，每次收集都会有大量对象死去，所以可以选择复制算法，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集。</strong></p>
+<p><strong>延伸问题：</strong> HotSpot为什么要分为新生代和老年代？</p>
+<p>根据上面的对分代收集算法的介绍回答。</p>
+<h2 id="5-垃圾收集器"><a href="#5-垃圾收集器" class="headerlink" title="5 垃圾收集器"></a>5 垃圾收集器</h2><p><strong>如果说收集算法是内存回收的方法论，那么垃圾收集器就是内存回收的具体实现。</strong></p>
+<p>虽然我们对各个收集器进行比较，但并非要挑选出一个最好的收集器。因为知道现在为止还没有最好的垃圾收集器出现，更加没有万能的垃圾收集器，<strong>我们能做的就是根据具体应用场景选择适合自己的垃圾收集器</strong>。试想一下：如果有一种四海之内、任何场景下都适用的完美收集器存在，那么我们的HotSpot虚拟机就不会实现那么多不同的垃圾收集器了。</p>
+<h3 id="5-1-Serial收集器"><a href="#5-1-Serial收集器" class="headerlink" title="5.1 Serial收集器"></a>5.1 Serial收集器</h3><p>Serial（串行）收集器是最基本、历史最悠久的垃圾收集器了。大家看名字就知道这个收集器是一个单线程收集器了。它的 <strong>“单线程”</strong> 的意义不仅仅意味着它只会使用一条垃圾收集线程去完成垃圾收集工作，更重要的是它在进行垃圾收集工作的时候必须暂停其他所有的工作线程（ <strong>“Stop The World”</strong> ），直到它收集结束。</p>
+<p><strong>新生代采用复制算法，老年代采用标记-整理算法。</strong></p>
+<p>虚拟机的设计者们当然知道Stop The World带来的不良用户体验，所以在后续的垃圾收集器设计中停顿时间在不断缩短（仍然还有停顿，寻找最优秀的垃圾收集器的过程仍然在继续）。</p>
+<p>但是Serial收集器有没有优于其他垃圾收集器的地方呢？当然有，它<strong>简单而高效（与其他收集器的单线程相比）</strong>。Serial收集器由于没有线程交互的开销，自然可以获得很高的单线程收集效率。Serial收集器对于运行在Client模式下的虚拟机来说是个不错的选择。</p>
+<h3 id="5-2-ParNew收集器"><a href="#5-2-ParNew收集器" class="headerlink" title="5.2 ParNew收集器"></a>5.2 ParNew收集器</h3><p><strong>ParNew收集器其实就是Serial收集器的多线程版本，除了使用多线程进行垃圾收集外，其余行为（控制参数、收集算法、回收策略等等）和Serial收集器完全一样。</strong></p>
+<p><strong>新生代采用复制算法，老年代采用标记-整理算法。</strong></p>
+<p>它是许多运行在Server模式下的虚拟机的首要选择，除了Serial收集器外，只有它能与CMS收集器（真正意义上的并发收集器，后面会介绍到）配合工作。</p>
+<p><strong>并行和并发概念补充：</strong></p>
 <ul>
-<li><p><strong>���У�Parallel��</strong> ��ָ���������ռ��̲߳��й���������ʱ�û��߳���Ȼ���ڵȴ�״̬��</p>
+<li><p><strong>并行（Parallel）</strong> ：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。</p>
 </li>
-<li><p><strong>������Concurrent��</strong>��ָ�û��߳��������ռ��߳�ͬʱִ�У�����һ���ǲ��У����ܻύ��ִ�У����û������ڼ������У��������ռ�����������һ��CPU�ϡ�</p>
+<li><p><strong>并发（Concurrent）</strong>：指用户线程与垃圾收集线程同时执行（但不一定是并行，可能会交替执行），用户程序在继续运行，而垃圾收集器运行在另一个CPU上。</p>
 </li>
 </ul>
-<h3 id="5-3-Parallel-Scavenge�ռ���"><a href="#5-3-Parallel-Scavenge�ռ���" class="headerlink" title="5.3 Parallel Scavenge�ռ���"></a>5.3 Parallel Scavenge�ռ���</h3><p>Parallel Scavenge �ռ���������ParNew �ռ����� <strong>��ô����ʲô�ر�֮���أ�</strong></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">-XX</span><span class="selector-pseudo">:+UseParallelGC</span> </span><br><span class="line"></span><br><span class="line">    ʹ��<span class="selector-tag">Parallel</span>�ռ���+ ���������</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">-XX</span><span class="selector-pseudo">:+UseParallelOldGC</span></span><br><span class="line"></span><br><span class="line">    ʹ��<span class="selector-tag">Parallel</span>�ռ���+ ���������</span><br></pre></td></tr></table></figure>
-<p><strong>Parallel Scavenge�ռ�����ע��������������Ч�ʵ�����CPU����CMS�������ռ����Ĺ�ע���������û��̵߳�ͣ��ʱ�䣨����û����飩����ν����������CPU�����������û������ʱ����CPU������ʱ��ı�ֵ��</strong> Parallel Scavenge�ռ����ṩ�˺ܶ�������û��ҵ�����ʵ�ͣ��ʱ����������������������ռ���������̫�˽�Ļ����ֹ��Ż����ڵĻ�����ѡ����ڴ�����Ż����������ȥ���Ҳ��һ��������ѡ��</p>
-<p><strong>���������ø����㷨����������ñ��-�����㷨��</strong></p>
-<h3 id="5-4-Serial-Old�ռ���"><a href="#5-4-Serial-Old�ռ���" class="headerlink" title="5.4.Serial Old�ռ���"></a>5.4.Serial Old�ռ���</h3><p><strong>Serial�ռ�����������汾</strong>����ͬ����һ�����߳��ռ���������Ҫ��������;��һ����;����JDK1.5�Լ���ǰ�İ汾����Parallel Scavenge�ռ�������ʹ�ã���һ����;����ΪCMS�ռ����ĺ󱸷�����</p>
-<h3 id="5-5-Parallel-Old�ռ���"><a href="#5-5-Parallel-Old�ռ���" class="headerlink" title="5.5 Parallel Old�ռ���"></a>5.5 Parallel Old�ռ���</h3><p><strong>Parallel Scavenge�ռ�����������汾</strong>��ʹ�ö��̺߳͡����-�������㷨����ע���������Լ�CPU��Դ�ĳ��ϣ����������ȿ��� Parallel Scavenge�ռ�����Parallel Old�ռ�����</p>
-<h3 id="5-6-CMS�ռ���"><a href="#5-6-CMS�ռ���" class="headerlink" title="5.6 CMS�ռ���"></a>5.6 CMS�ռ���</h3><p><strong>CMS��Concurrent Mark Sweep���ռ�����һ���Ի�ȡ��̻���ͣ��ʱ��ΪĿ����ռ��������ǳ�������ע���û������Ӧ����ʹ�á�</strong></p>
-<p><strong>CMS��Concurrent Mark Sweep���ռ�����HotSpot�������һ�����������ϵĲ����ռ���������һ��ʵ�����������ռ��߳����û��̣߳������ϣ�ͬʱ������</strong></p>
-<p>�������е�<strong>Mark Sweep</strong>�������ʿ��Կ�����CMS�ռ�����һ�� <strong>�����-������㷨</strong>ʵ�ֵģ������������������ǰ�漸�������ռ�����˵���Ӹ���һЩ���������̷�Ϊ�ĸ����裺</p>
+<h3 id="5-3-Parallel-Scavenge收集器"><a href="#5-3-Parallel-Scavenge收集器" class="headerlink" title="5.3 Parallel Scavenge收集器"></a>5.3 Parallel Scavenge收集器</h3><p>Parallel Scavenge 收集器类似于ParNew 收集器。 <strong>那么它有什么特别之处呢？</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">-XX</span><span class="selector-pseudo">:+UseParallelGC</span> </span><br><span class="line"></span><br><span class="line">    使用<span class="selector-tag">Parallel</span>收集器+ 老年代串行</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">-XX</span><span class="selector-pseudo">:+UseParallelOldGC</span></span><br><span class="line"></span><br><span class="line">    使用<span class="selector-tag">Parallel</span>收集器+ 老年代并行</span><br></pre></td></tr></table></figure>
+<p><strong>Parallel Scavenge收集器关注点是吞吐量（高效率的利用CPU）。CMS等垃圾收集器的关注点更多的是用户线程的停顿时间（提高用户体验）。所谓吞吐量就是CPU中用于运行用户代码的时间与CPU总消耗时间的比值。</strong> Parallel Scavenge收集器提供了很多参数供用户找到最合适的停顿时间或最大吞吐量，如果对于收集器运作不太了解的话，手工优化存在的话可以选择把内存管理优化交给虚拟机去完成也是一个不错的选择。</p>
+<p><strong>新生代采用复制算法，老年代采用标记-整理算法。</strong></p>
+<h3 id="5-4-Serial-Old收集器"><a href="#5-4-Serial-Old收集器" class="headerlink" title="5.4.Serial Old收集器"></a>5.4.Serial Old收集器</h3><p><strong>Serial收集器的老年代版本</strong>，它同样是一个单线程收集器。它主要有两大用途：一种用途是在JDK1.5以及以前的版本中与Parallel Scavenge收集器搭配使用，另一种用途是作为CMS收集器的后备方案。</p>
+<h3 id="5-5-Parallel-Old收集器"><a href="#5-5-Parallel-Old收集器" class="headerlink" title="5.5 Parallel Old收集器"></a>5.5 Parallel Old收集器</h3><p><strong>Parallel Scavenge收集器的老年代版本</strong>。使用多线程和“标记-整理”算法。在注重吞吐量以及CPU资源的场合，都可以优先考虑 Parallel Scavenge收集器和Parallel Old收集器。</p>
+<h3 id="5-6-CMS收集器"><a href="#5-6-CMS收集器" class="headerlink" title="5.6 CMS收集器"></a>5.6 CMS收集器</h3><p><strong>CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器。它非常符合在注重用户体验的应用上使用。</strong></p>
+<p><strong>CMS（Concurrent Mark Sweep）收集器是HotSpot虚拟机第一款真正意义上的并发收集器，它第一次实现了让垃圾收集线程与用户线程（基本上）同时工作。</strong></p>
+<p>从名字中的<strong>Mark Sweep</strong>这两个词可以看出，CMS收集器是一种 <strong>“标记-清除”算法</strong>实现的，它的运作过程相比于前面几种垃圾收集器来说更加复杂一些。整个过程分为四个步骤：</p>
 <ul>
-<li><strong>��ʼ��ǣ�</strong> ��ͣ���е������̣߳�����¼��ֱ����root�����Ķ����ٶȺܿ� ��</li>
-<li><strong>������ǣ�</strong> ͬʱ����GC���û��̣߳���һ���հ��ṹȥ��¼�ɴ���󡣵�������׶ν���������հ��ṹ�����ܱ�֤������ǰ���еĿɴ������Ϊ�û��߳̿��ܻ᲻�ϵĸ�������������GC�߳��޷���֤�ɴ��Է�����ʵʱ�ԡ���������㷨�����ټ�¼��Щ�������ø��µĵط���</li>
-<li><strong>���±�ǣ�</strong> ���±�ǽ׶ξ���Ϊ��������������ڼ���Ϊ�û�����������ж����±�ǲ����䶯����һ���ֶ���ı�Ǽ�¼������׶ε�ͣ��ʱ��һ���ȳ�ʼ��ǽ׶ε�ʱ���Գ���ԶԶ�Ȳ�����ǽ׶�ʱ���</li>
-<li><strong>���������</strong> �����û��̣߳�ͬʱGC�߳̿�ʼ��Ϊ��ǵ���������ɨ��</li>
+<li><strong>初始标记：</strong> 暂停所有的其他线程，并记录下直接与root相连的对象，速度很快 ；</li>
+<li><strong>并发标记：</strong> 同时开启GC和用户线程，用一个闭包结构去记录可达对象。但在这个阶段结束，这个闭包结构并不能保证包含当前所有的可达对象。因为用户线程可能会不断的更新引用域，所以GC线程无法保证可达性分析的实时性。所以这个算法里会跟踪记录这些发生引用更新的地方。</li>
+<li><strong>重新标记：</strong> 重新标记阶段就是为了修正并发标记期间因为用户程序继续运行而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段的时间稍长，远远比并发标记阶段时间短</li>
+<li><strong>并发清除：</strong> 开启用户线程，同时GC线程开始对为标记的区域做清扫。</li>
 </ul>
-<p>���������־Ϳ��Կ�������һ������������ռ�������Ҫ�ŵ㣺<strong>�����ռ�����ͣ��</strong>���������������������Ե�ȱ�㣺</p>
+<p>从它的名字就可以看出它是一款优秀的垃圾收集器，主要优点：<strong>并发收集、低停顿</strong>。但是它有下面三个明显的缺点：</p>
 <ul>
-<li><strong>��CPU��Դ���У�</strong></li>
-<li><strong>�޷���������������</strong></li>
-<li><strong>��ʹ�õĻ����㷨�����-������㷨�ᵼ���ռ�����ʱ���д����ռ���Ƭ������</strong></li>
+<li><strong>对CPU资源敏感；</strong></li>
+<li><strong>无法处理浮动垃圾；</strong></li>
+<li><strong>它使用的回收算法“标记-清除”算法会导致收集结束时会有大量空间碎片产生。</strong></li>
 </ul>
-<h3 id="5-7-G1�ռ���"><a href="#5-7-G1�ռ���" class="headerlink" title="5.7 G1�ռ���"></a>5.7 G1�ռ���</h3><p><strong>G1 (Garbage-First)��һ������������������ռ���,��Ҫ����䱸��Ŵ��������������ڴ�Ļ���. �Լ��߸�������GCͣ��ʱ��Ҫ���ͬʱ,���߱�����������������.</strong></p>
-<p>����ΪJDK1.7��HotSpot�������һ����Ҫ�������������߱�һ���ص㣺</p>
+<h3 id="5-7-G1收集器"><a href="#5-7-G1收集器" class="headerlink" title="5.7 G1收集器"></a>5.7 G1收集器</h3><p><strong>G1 (Garbage-First)是一款面向服务器的垃圾收集器,主要针对配备多颗处理器及大容量内存的机器. 以极高概率满足GC停顿时间要求的同时,还具备高吞吐量性能特征.</strong></p>
+<p>被视为JDK1.7中HotSpot虚拟机的一个重要进化特征。它具备一下特点：</p>
 <ul>
-<li><strong>�����벢��</strong>��G1�ܳ������CPU����˻����µ�Ӳ�����ƣ�ʹ�ö��CPU��CPU����CPU���ģ�������Stop-The-Worldͣ��ʱ�䡣���������ռ���ԭ����Ҫͣ��Java�߳�ִ�е�GC������G1�ռ�����Ȼ����ͨ�������ķ�ʽ��java�������ִ�С�</li>
-<li><strong>�ִ��ռ�</strong>����ȻG1���Բ���Ҫ�����ռ�����Ͼ��ܶ�����������GC�ѣ����ǻ��Ǳ����˷ִ��ĸ��</li>
-<li><strong>�ռ�����</strong>����CMS�ġ����–�������㷨��ͬ��G1�����������ǻ��ڡ�����������㷨ʵ�ֵ��ռ������Ӿֲ��������ǻ��ڡ����ơ��㷨ʵ�ֵġ�</li>
-<li><strong>��Ԥ���ͣ��</strong>������G1�����CMS����һ�������ƣ�����ͣ��ʱ����G1 �� CMS ��ͬ�Ĺ�ע�㣬��G1 ����׷���ͣ���⣬���ܽ�����Ԥ���ͣ��ʱ��ģ�ͣ�����ʹ������ȷָ����һ������ΪM�����ʱ��Ƭ���ڡ�</li>
+<li><strong>并行与并发</strong>：G1能充分利用CPU、多核环境下的硬件优势，使用多个CPU（CPU或者CPU核心）来缩短Stop-The-World停顿时间。部分其他收集器原本需要停顿Java线程执行的GC动作，G1收集器仍然可以通过并发的方式让java程序继续执行。</li>
+<li><strong>分代收集</strong>：虽然G1可以不需要其他收集器配合就能独立管理整个GC堆，但是还是保留了分代的概念。</li>
+<li><strong>空间整合</strong>：与CMS的“标记–清理”算法不同，G1从整体来看是基于“标记整理”算法实现的收集器；从局部上来看是基于“复制”算法实现的。</li>
+<li><strong>可预测的停顿</strong>：这是G1相对于CMS的另一个大优势，降低停顿时间是G1 和 CMS 共同的关注点，但G1 除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为M毫秒的时间片段内。</li>
 </ul>
-<p>G1�ռ������������·�Ϊ���¼������裺</p>
+<p>G1收集器的运作大致分为以下几个步骤：</p>
 <ul>
-<li><strong>��ʼ���</strong></li>
-<li><strong>�������</strong></li>
-<li><strong>���ձ��</strong></li>
-<li><strong>ɸѡ����</strong></li>
+<li><strong>初始标记</strong></li>
+<li><strong>并发标记</strong></li>
+<li><strong>最终标记</strong></li>
+<li><strong>筛选回收</strong></li>
 </ul>
-<p><strong>G1�ռ����ں�̨ά����һ�������б���ÿ�θ����������ռ�ʱ�䣬����ѡ����ռ�ֵ����Region(��Ҳ������������Garbage-First������)</strong>������ʹ��Region�����ڴ�ռ��Լ������ȼ���������շ�ʽ����֤��G1�ռ���������ʱ���ڿ��Ծ����ܸߵ��ռ�Ч�ʣ����ڴ滯��Ϊ�㣩��</p>
+<p><strong>G1收集器在后台维护了一个优先列表，每次根据允许的收集时间，优先选择回收价值最大的Region(这也就是它的名字Garbage-First的由来)</strong>。这种使用Region划分内存空间以及有优先级的区域回收方式，保证了G1收集器在有限时间内可以尽可能高的收集效率（把内存化整为零）。</p>
 
       
 
@@ -338,7 +338,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/JVM����ʼ�//" class="article-tag-list-link color5">JVM����ʼ�</a>
+        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
         		</li>
       		
 		</ul>
@@ -407,9 +407,18 @@
   
 <nav id="article-nav">
   
+    <a href="/2019/02/26/深入理解虚拟机之Java内存区域/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          深入理解虚拟机之Java内存区域
+        
+      </div>
+    </a>
   
-    <a href="/2019/02/26/深入理解虚拟机之Java内存区域/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">深入理解虚拟机之Java内存区域</div>
+  
+    <a href="/2019/02/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -436,7 +445,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#��������"><span class="toc-number">1.</span> <span class="toc-text">��������</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-����"><span class="toc-number">2.</span> <span class="toc-text">1 ����</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-JVM�ڴ���������"><span class="toc-number">3.</span> <span class="toc-text">2 JVM�ڴ���������</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-����������eden������"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 ����������eden������</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-�����ֱ�ӽ��������"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 �����ֱ�ӽ��������</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-���ڴ��K��󽫽��������"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 ���ڴ��Ķ��󽫽��������</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-��̬���������ж�"><span class="toc-number">3.4.</span> <span class="toc-text">2.4 ��̬���������ж�</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-�����Ѿ�������"><span class="toc-number">4.</span> <span class="toc-text">3 �����Ѿ�������</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-���u�����"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 ���ü�����</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-�ɴ��Է����㷨"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 �ɴ��Է����㷨</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-��̸����"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 ��̸����</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-���ɴ�K��󲢷a��������ɡ�"><span class="toc-number">4.4.</span> <span class="toc-text">3.4 ���ɴ�Ķ��󲢷ǡ��������ɡ�</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-����ж�һ�������Ƿ�������"><span class="toc-number">4.5.</span> <span class="toc-text">3.5 ����ж�һ�������Ƿ�������</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-����ж�һ���������o���"><span class="toc-number">4.6.</span> <span class="toc-text">3.6 ����ж�һ���������õ���</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-�����ռ��㷨"><span class="toc-number">5.</span> <span class="toc-text">4 �����ռ��㷨</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-���-����㷨"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 ���-����㷨</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-�����㷨"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 �����㷨</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-���-�����㷨"><span class="toc-number">5.3.</span> <span class="toc-text">4.3 ���-�����㷨</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-�ִ��ռ��㷨"><span class="toc-number">5.4.</span> <span class="toc-text">4.4 �ִ��ռ��㷨</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-�����ռ���"><span class="toc-number">6.</span> <span class="toc-text">5 �����ռ���</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Serial�ռ���"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 Serial�ռ���</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-ParNew�ռ���"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 ParNew�ռ���</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-Parallel-Scavenge�ռ���"><span class="toc-number">6.3.</span> <span class="toc-text">5.3 Parallel Scavenge�ռ���</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-Serial-Old�ռ���"><span class="toc-number">6.4.</span> <span class="toc-text">5.4.Serial Old�ռ���</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-Parallel-Old�ռ���"><span class="toc-number">6.5.</span> <span class="toc-text">5.5 Parallel Old�ռ���</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-CMS�ռ���"><span class="toc-number">6.6.</span> <span class="toc-text">5.6 CMS�ռ���</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-7-G1�ռ���"><span class="toc-number">6.7.</span> <span class="toc-text">5.7 G1�ռ���</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本问题"><span class="toc-number">1.</span> <span class="toc-text">基本问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-概述"><span class="toc-number">2.</span> <span class="toc-text">1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-JVM内存分配与回收"><span class="toc-number">3.</span> <span class="toc-text">2 JVM内存分配与回收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-对象优先在eden区分配"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 对象优先在eden区分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-大对象直接进入老年代"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 大对象直接进入老年代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-长期存活的对象将进入老年代"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 长期存活的对象将进入老年代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-动态对象年龄判定"><span class="toc-number">3.4.</span> <span class="toc-text">2.4 动态对象年龄判定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-对象已经死亡？"><span class="toc-number">4.</span> <span class="toc-text">3 对象已经死亡？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-引用计数法"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 引用计数法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-可达性分析算法"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 可达性分析算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-再谈引用"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 再谈引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-不可达的对象并非“非死不可”"><span class="toc-number">4.4.</span> <span class="toc-text">3.4 不可达的对象并非“非死不可”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-如何判断一个常量是废弃常量"><span class="toc-number">4.5.</span> <span class="toc-text">3.5 如何判断一个常量是废弃常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-如何判断一个类是无用的类"><span class="toc-number">4.6.</span> <span class="toc-text">3.6 如何判断一个类是无用的类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-垃圾收集算法"><span class="toc-number">5.</span> <span class="toc-text">4 垃圾收集算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-标记-清除算法"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 标记-清除算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-复制算法"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 复制算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-标记-整理算法"><span class="toc-number">5.3.</span> <span class="toc-text">4.3 标记-整理算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-分代收集算法"><span class="toc-number">5.4.</span> <span class="toc-text">4.4 分代收集算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-垃圾收集器"><span class="toc-number">6.</span> <span class="toc-text">5 垃圾收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Serial收集器"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 Serial收集器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-ParNew收集器"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 ParNew收集器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-Parallel-Scavenge收集器"><span class="toc-number">6.3.</span> <span class="toc-text">5.3 Parallel Scavenge收集器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-Serial-Old收集器"><span class="toc-number">6.4.</span> <span class="toc-text">5.4.Serial Old收集器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-Parallel-Old收集器"><span class="toc-number">6.5.</span> <span class="toc-text">5.5 Parallel Old收集器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-CMS收集器"><span class="toc-number">6.6.</span> <span class="toc-text">5.6 CMS收集器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-7-G1收集器"><span class="toc-number">6.7.</span> <span class="toc-text">5.7 G1收集器</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
