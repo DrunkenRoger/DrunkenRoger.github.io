@@ -152,6 +152,195 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-深入理解虚拟机之虚拟机类加载机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/26/深入理解虚拟机之虚拟机类加载机制/">深入理解虚拟机之虚拟机类加载机制</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/26/深入理解虚拟机之虚拟机类加载机制/" class="archive-article-date">
+  	<time datetime="2019-02-26T05:12:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="基本问题"><a href="#基本问题" class="headerlink" title="基本问题"></a>基本问题</h2><ul>
+<li>简单说说类加载过程，里面执行了哪些操作</li>
+<li>对类加载器有了解吗</li>
+<li>什么是双亲委派模型</li>
+<li>双亲委派模型的工作过程以及使用它的好处</li>
+</ul>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>已经知道了类文件结构，在class文件中描述的各种信息最终都需要加载到虚拟机中之后才能运行和使用。</p>
+<p>那么虚拟机是如加载这些class文件呢？class文件中的信息进入到虚拟机后会发生什么变化呢？</p>
+<h3 id="1-1-虚拟机类加载机制的概念"><a href="#1-1-虚拟机类加载机制的概念" class="headerlink" title="1.1 虚拟机类加载机制的概念"></a>1.1 虚拟机类加载机制的概念</h3><p>虚拟机把描述类的数据从class文件加载到内存，并对数据进行校验、转换解析和初始化。最终形成可以被虚拟机最直接使用的java类型的过程就是虚拟机的类加载机制。</p>
+<h3 id="1-2-Java语言的动态加载和动态连接"><a href="#1-2-Java语言的动态加载和动态连接" class="headerlink" title="1.2 Java语言的动态加载和动态连接"></a>1.2 Java语言的动态加载和动态连接</h3><p>另外需要注意的很重要的一点是：<strong>java语言中类型的加载连接以及初始化过程都是在程序运行期间完成的</strong>，这种策略虽然会使类加载时稍微增加一些性能开销，但是会为java应用程序提供高度的<strong>灵活性</strong>。java里天生就可以动态扩展语言特性就是依赖运行期间动态加载和动态连接这个特点实现的。比如，如果编写一个面向接口的程序，可以等到运行时再指定其具体实现类。<br>
+        
+          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之虚拟机类加载机制/#more">more >></a>
+        
+      
+
+      
+    </p></div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之虚拟机类加载机制/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-深入理解虚拟机之类文件结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/26/深入理解虚拟机之类文件结构/">深入理解虚拟机之类文件结构</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/26/深入理解虚拟机之类文件结构/" class="archive-article-date">
+  	<time datetime="2019-02-26T05:11:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="基本问题"><a href="#基本问题" class="headerlink" title="基本问题"></a>基本问题</h2><ul>
+<li>简单介绍一下Class类文件结构</li>
+<li>常量池主要存放的是那两大常量</li>
+<li>Class文件的继承关系是如何确定的</li>
+<li>字段表、方法表、属性表主要包含那些信息</li>
+</ul>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>　 计算机虽然只能识别0和1，但是越来越多的程序语言选择了与操作系统和机器指令集无关无关的、平台中立的格式作为程序编译后的存储格式。Java虚拟机不和包括Java在内的任何语言绑定，只与 <strong>“Class文件”</strong> 这种特定的二进制文件所关联，Class文件中包含了Java虚拟机指令集合符号表以及若干其它辅助信息。Java虚拟机作为一个通用的、机器无关的执行平台，任何其他语言都可以将其作为语言的产品交付媒介。<br>
+        
+          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之类文件结构/#more">more >></a>
+        
+      
+
+      
+    </p></div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之类文件结构/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-深入理解虚拟机之Java内存区域" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
