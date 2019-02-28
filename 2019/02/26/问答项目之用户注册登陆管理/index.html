@@ -6,15 +6,50 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://drunkenroger.github.io">
-  <title>Category: JVM读书笔记 | DrunkenRoger&#39;s 博客</title>
+  <title>问答项目之用户注册登陆管理 | DrunkenRoger&#39;s 博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="DrunkenRoger&#39;s 博客">
-<meta property="og:url" content="https://drunkenroger.github.io/categories/JVM读书笔记/index.html">
+  <meta name="description" content="密码salt加密密码salt加密是指，比如我设置密码19901127，用MD5转换如下：我把这个32位 小写的MD5加密过后的6483531a2d41b810626141e53da2be05存入数据库，充当用户密码，如果这个32位的码泄露出去，人家可以轻易反MD5编码解出我的密码为19901127如果我存入数据库的字符串为19901127fsdf32gfd，后面这串fsdf32gfd就是salt">
+<meta name="keywords" content="wenda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问答项目之用户注册登陆管理">
+<meta property="og:url" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index.html">
 <meta property="og:site_name" content="DrunkenRoger&#39;s 博客">
+<meta property="og:description" content="密码salt加密密码salt加密是指，比如我设置密码19901127，用MD5转换如下：我把这个32位 小写的MD5加密过后的6483531a2d41b810626141e53da2be05存入数据库，充当用户密码，如果这个32位的码泄露出去，人家可以轻易反MD5编码解出我的密码为19901127如果我存入数据库的字符串为19901127fsdf32gfd，后面这串fsdf32gfd就是salt">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image00135bdbe97-47a0-4704-89af-2f167079983c.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image00270b00e7f-782e-4cfd-b3ca-47050b8c8957.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image00339e92fbb-e975-47a7-affb-e3d2dd01795a.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image004ae68219c-2d53-4624-9b27-636f2776654c.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image0053527fe0f-030f-45cc-89c8-f04a11925131.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image006d4ac50b7-4d5b-4d0b-a198-d46a32980414.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image00877d485ba-dc73-42ec-8db8-0ff788ae832b.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image009077d5aa9-a900-452f-b1b6-2b479b842031.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image0101d2f0be7-e827-435c-b280-b8e14268f8ac.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image011016c2dca-8deb-438b-b653-ec39ca28b94d.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image01289728357-4ba9-4894-a0d5-73be467ac43b.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image013fc8fae4d-8628-41c3-b345-1994e699133b.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image0146aeab035-54ce-4de4-97f5-34dd8f4ba5ee.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image015f375a282-1044-427d-9bec-ba58d7ee439e.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image0166ffc5a26-f5f9-4e62-944e-702be3a18dac.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image017692d2370-a08a-4cf3-9720-93cfbe151d02.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image0183b307815-e214-4b3f-be6e-e17e22671db7.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image019d5d3e20c-5f87-4e53-af19-df65ce7a0f01.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image020f9e9f0f8-0d8b-4634-8b7f-69fb4b5e95a6.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image0211fd586e1-ee82-449c-8757-938381cf2a46.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image02239ef4d33-68e3-4587-9653-cddc9a573357.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image023e65c9f93-e80c-4ffe-b9ee-819078294f2e.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image0244140bc43-98f0-4148-a20b-44e987bff604.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image0256a89b5bd-540d-444e-8250-e68ccb42d227.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image026207db5d2-d79c-4951-a3e8-0049ecfd9d38.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image027fbf1d51b-32f6-4263-9606-6e7d05c4407c.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image0282f82414f-f96b-40b4-9670-6c7a4eac4390.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image02940c1a6a0-4782-46f4-bc5f-6f5b39968c2b.png">
+<meta property="og:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image03088f72108-5284-4661-a2b5-b3ad6b9cf547.png">
+<meta property="og:updated_time" content="2019-02-28T12:46:02.149Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DrunkenRoger&#39;s 博客">
+<meta name="twitter:title" content="问答项目之用户注册登陆管理">
+<meta name="twitter:description" content="密码salt加密密码salt加密是指，比如我设置密码19901127，用MD5转换如下：我把这个32位 小写的MD5加密过后的6483531a2d41b810626141e53da2be05存入数据库，充当用户密码，如果这个32位的码泄露出去，人家可以轻易反MD5编码解出我的密码为19901127如果我存入数据库的字符串为19901127fsdf32gfd，后面这串fsdf32gfd就是salt">
+<meta name="twitter:image" content="https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/index_files/clip_image00135bdbe97-47a0-4704-89af-2f167079983c.png">
   
     <link rel="alternative" href="/atom.xml" title="DrunkenRoger&#39;s 博客" type="application/atom+xml">
   
@@ -150,218 +185,199 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-问答项目之用户注册登陆管理" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      问答项目之用户注册登陆管理
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/26/深入理解虚拟机之虚拟机类加载机制/" class="archive-article-date">
+
+        
+        <a href="/2019/02/26/问答项目之用户注册登陆管理/" class="archive-article-date">
   	<time datetime="2019-02-26T05:12:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/26/深入理解虚拟机之虚拟机类加载机制/">深入理解虚拟机之虚拟机类加载机制</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="index_files/clip_image00135bdbe97-47a0-4704-89af-2f167079983c.png" alt></p>
+<h2 id="密码salt加密"><a href="#密码salt加密" class="headerlink" title="密码salt加密"></a>密码salt加密</h2><p>密码salt加密是指，比如我设置密码19901127，用MD5转换如下：<br><img src="index_files/clip_image00270b00e7f-782e-4cfd-b3ca-47050b8c8957.png" alt><br>我把这个32位 小写的MD5加密过后的6483531a2d41b810626141e53da2be05存入数据库，充当用户密码，如果这个32位的码泄露出去，人家可以轻易反MD5编码解出我的密码为19901127<br>如果我存入数据库的字符串为19901127<strong>fsdf32gfd</strong>，后面这串<strong>fsdf32gfd</strong>就是salt,19901127fsdf32gfd经过MD5加密过后如下：<br><img src="index_files/clip_image00339e92fbb-e975-47a7-affb-e3d2dd01795a.png" alt><br>但是这个32位的77784a2833427ad5ddda0b64408cf1c6，人家就不能用反MD5解密出来，这就是salt的重要性！</p>
+<p>安全等级低的，全站所有用户用同一个salt，安全等级高的，每个用户都有一个自己的salt。</p>
+<h2 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h2><p>首先在UserService中写注册功能逻辑，<br>注意map包含注册返回的信息，比如“密码不能为空”,”用户名已经被注册”<br><img src="index_files/clip_image004ae68219c-2d53-4624-9b27-636f2776654c.png" alt><br><img src="index_files/clip_image0053527fe0f-030f-45cc-89c8-f04a11925131.png" alt></p>
+<p>然后在LoginController中写页面逻辑<br><img src="index_files/clip_image006d4ac50b7-4d5b-4d0b-a198-d46a32980414.png" alt></p>
+<p>Login.html是登录注册页面<br>注意$msg，这是后端传过来的错误提示<br>还有Button按钮的onclick属性标示了同一个表单内点击不同的按钮跳转对象的不同。</p>
+<h2 id="登录功能"><a href="#登录功能" class="headerlink" title="登录功能"></a>登录功能</h2><p><img src="index_files/clip_image00877d485ba-dc73-42ec-8db8-0ff788ae832b.png" alt></p>
+<p>登录功能和注册的逻辑基本是一样的，因为用户注册后就自动登录了。</p>
+<p>这里主要讲T票，也称token，即把T票作为用户已经登录了的令牌，如果持有这个T票，则说明用户处于已经登录状态，允许用户进行各个页面的跳转，如果没有T票，则视为未登录。<br><img src="index_files/clip_image009077d5aa9-a900-452f-b1b6-2b479b842031.png" alt><br>这里最上面一段，登录成功则返回一个T票，下面的addLoginTicket方法就是登录或者注册验证成功的同时给予一个T票。<br>这个LoginTicket还有专门的DAO层和Model层，因为数据库里有login_ticket表<br>为什么要给T票在数据库里建一张表呢？因为假设我们有两台服务器，用户在A服务器登录了，然后继续访问，B服务器处理了这个请求，如果没有数据库，B服务器怎么知道你是刚刚在A服务器登录的用户呢。很多大型网站采用的session共享，虽然没有建表，但是达到的目的和这个建表是一样的，只是手段不一样罢了。<br><img src="index_files/clip_image0101d2f0be7-e827-435c-b280-b8e14268f8ac.png" alt></p>
+<p><img src="index_files/clip_image011016c2dca-8deb-438b-b653-ec39ca28b94d.png" alt></p>
+<p><img src="index_files/clip_image01289728357-4ba9-4894-a0d5-73be467ac43b.png" alt><br>用户每次登录或者注册成功就会忘Login_ticket表中存入数据，其中ticket是随机生成的全局唯一标识符UUID，expired是过期日期，status为0时表示有效，为1时表示无效。<br>当用户登出时，把status状态置为1。</p>
+<p>在LoginController中<br><img src="index_files/clip_image013fc8fae4d-8628-41c3-b345-1994e699133b.png" alt><br>为登录注册的页面，</p>
+<p>在这个页面点击“注册”操作执行如下函数<br><img src="index_files/clip_image0146aeab035-54ce-4de4-97f5-34dd8f4ba5ee.png" alt><br>在这个页面点击“登录”操作执行如下函数<br><img src="index_files/clip_image015f375a282-1044-427d-9bec-ba58d7ee439e.png" alt></p>
+<h2 id="页面访问"><a href="#页面访问" class="headerlink" title="页面访问"></a>页面访问</h2><p><img src="index_files/clip_image0166ffc5a26-f5f9-4e62-944e-702be3a18dac.png" alt></p>
+<h4 id="Interceptor拦截器"><a href="#Interceptor拦截器" class="headerlink" title="Interceptor拦截器"></a>Interceptor拦截器</h4><p>拦截器和面向切面编程的思路是一样的，都是在原有程序处理的基础上添加一些额外处理的功能。</p>
+<p>比如权限控制都可以用拦截器来做，比如网课，购买了可以访问，未购买就不能访问。<br><img src="index_files/clip_image017692d2370-a08a-4cf3-9720-93cfbe151d02.png" alt></p>
+<p>一般一个拦截器只做一件事情，一个拦截器有上图中的三个函数：<br>preHandle作用在请求发生前，如果返回false，则后面整个请求直接结束；<br>postHandle是在preHandle处理完了之后，html页面渲染之前发生作用；<br>afterHandle是在Controller和Html页面渲染处理完了之后发生作用，一般用于删除前面拦截器产生的影响。</p>
+<p>首先自定义我们的拦截器，实现HandlerInterceptor并重载上述三个方法<br><img src="index_files/clip_image0183b307815-e214-4b3f-be6e-e17e22671db7.png" alt></p>
+<p><img src="index_files/clip_image019d5d3e20c-5f87-4e53-af19-df65ce7a0f01.png" alt></p>
+<p>然后注册我们的拦截器到链路上，才能正常运转，主要要继承WebMvcConfigurerAdapter<br><img src="index_files/clip_image020f9e9f0f8-0d8b-4634-8b7f-69fb4b5e95a6.png" alt></p>
+<p><img src="index_files/clip_image0211fd586e1-ee82-449c-8757-938381cf2a46.png" alt><br>注意，如果有多个拦截器，拦截器添加的顺序也是执行的顺序</p>
+<h5 id="未登录访问页面跳转"><a href="#未登录访问页面跳转" class="headerlink" title="未登录访问页面跳转"></a>未登录访问页面跳转</h5><p>有时候我们浏览网站，点击某些页面需要登录，此时点击该页面后如果没有登录就直接跳转到登录页面，登录成功后再跳转回刚才要访问的页面。</p>
+<p>首先定义拦截器，如果用户未登录访问，则跳转到登录页面，并用next记录当前访问的页面地址<br><img src="index_files/clip_image02239ef4d33-68e3-4587-9653-cddc9a573357.png" alt></p>
+<p><img src="index_files/clip_image023e65c9f93-e80c-4ffe-b9ee-819078294f2e.png" alt></p>
+<p>然后注册拦截器，这里定义了用户只有访问/user/*页面时才调用该拦截器<br><img src="index_files/clip_image0244140bc43-98f0-4148-a20b-44e987bff604.png" alt></p>
+<p><img src="index_files/clip_image0256a89b5bd-540d-444e-8250-e68ccb42d227.png" alt></p>
+<p>最后在LoginController中写逻辑，有关这一功能的是next属性，next记录了用户未登录访问/user/*时的地址，然后跳转到登录页面，登录成功后再跳转回该next记录的地址<br><img src="index_files/clip_image026207db5d2-d79c-4951-a3e8-0049ecfd9d38.png" alt><br>LoginController中，如果next是有值的不为空，那么自然就跳转回用户未登录之前访问的页面</p>
+<p><strong>我的改进</strong>：当用户访问/user/*页面时跳转到登录页面，此时next有值，但是如果用户登录失败，则next值就丢失了，再登录成功也不会返回用户登录之前访问的页面。</p>
+<p>因此要在UserService中的login函数中增加参数next，传递next的值，如果是Null，也会传递null,如下，用map记录了next的值<br><img src="index_files/clip_image027fbf1d51b-32f6-4263-9606-6e7d05c4407c.png" alt><br>然后再在LoginController中，把model中的Next值传给前端页面<br><img src="index_files/clip_image0282f82414f-f96b-40b4-9670-6c7a4eac4390.png" alt><br>前端login.html的隐藏表单就记录了next值<br><img src="index_files/clip_image02940c1a6a0-4782-46f4-bc5f-6f5b39968c2b.png" alt></p>
+<h2 id="用户数据安全性"><a href="#用户数据安全性" class="headerlink" title="用户数据安全性"></a>用户数据安全性</h2><p><img src="index_files/clip_image03088f72108-5284-4661-a2b5-b3ad6b9cf547.png" alt><br>登录注册页面由HTTP改为HTTPS，HTTPS就不是明文的，是经过加密的，这样用户账号密码就不会泄露。<br>更高级的是公钥加密、私钥解密。<br>单点登录是同时一个账户只能由一台机器登录，该ID只能由一个有效token</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">wenda</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
+        			<a href="/categories/项目//" class="article-tag-list-link color3">项目</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://drunkenroger.github.io/2019/02/26/问答项目之用户注册登陆管理/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/26/深入理解虚拟机之类文件结构/" class="archive-article-date">
-  	<time datetime="2019-02-26T05:11:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/02/26/深入理解虚拟机之虚拟机类加载机制/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">深入理解虚拟机之虚拟机类加载机制</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/26/深入理解虚拟机之类文件结构/">深入理解虚拟机之类文件结构</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#密码salt加密"><span class="toc-number">1.</span> <span class="toc-text">密码salt加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册"><span class="toc-number">2.</span> <span class="toc-text">注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#登录功能"><span class="toc-number">3.</span> <span class="toc-text">登录功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面访问"><span class="toc-number">4.</span> <span class="toc-text">页面访问</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Interceptor拦截器"><span class="toc-number">4.0.1.</span> <span class="toc-text">Interceptor拦截器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#未登录访问页面跳转"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">未登录访问页面跳转</span></a></li></ol></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#用户数据安全性"><span class="toc-number">5.</span> <span class="toc-text">用户数据安全性</span></a></li>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/26/深入理解虚拟机之垃圾回收/" class="archive-article-date">
-  	<time datetime="2019-02-26T03:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/26/深入理解虚拟机之垃圾回收/">深入理解虚拟机之垃圾回收</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/26/深入理解虚拟机之Java内存区域/" class="archive-article-date">
-  	<time datetime="2019-02-26T03:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/26/深入理解虚拟机之Java内存区域/">深入理解虚拟机之Java内存区域</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -388,10 +404,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
