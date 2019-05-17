@@ -152,6 +152,68 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Nginx-Tomcat配置负载均衡集群" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/17/Nginx-Tomcat配置负载均衡集群/">Nginx+Tomcat配置负载均衡集群</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/17/Nginx-Tomcat配置负载均衡集群/" class="archive-article-date">
+  	<time datetime="2019-05-17T08:56:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/17/Nginx-Tomcat配置负载均衡集群/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-一台机器同时启动多个Tomcat" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -159,7 +221,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/17/一台机器同时启动多个Tomcat/">深入理解虚拟机之Java内存区域</a>
+      <a class="article-title" href="/2019/05/17/一台机器同时启动多个Tomcat/">一台机器同时启动多个Tomcat</a>
     </h1>
   
 
@@ -172,18 +234,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1、前期准备"><a href="#1、前期准备" class="headerlink" title="1、前期准备"></a>1、前期准备</h2><p>首先去apache tomcat官网下载一个tomcat解压版。<br><a href="https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png</a><br>解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……<br><a href="https://static.oschina.net/uploads/space/2017/0328/160419_P4o4_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0328/160419_P4o4_3203872.png</a></p>
-<h2 id="2、修改server-xml配置文件"><a href="#2、修改server-xml配置文件" class="headerlink" title="2、修改server.xml配置文件"></a>2、修改server.xml配置文件</h2><p><strong>分别进入tomcat/conf/目录，修改server.xml，一共三处。</strong><br><a href="https://static.oschina.net/uploads/space/2017/0328/160549_uR0Y_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0328/160549_uR0Y_3203872.png</a><br>第一处：<br><a href="https://static.oschina.net/uploads/space/2017/0329/094952_RXZx_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/094952_RXZx_3203872.png</a><br><a href="https://static.oschina.net/uploads/space/2017/0329/171532_GBJ7_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/171532_GBJ7_3203872.png</a><br>第二处、tomcat访问端口号：<br><a href="https://static.oschina.net/uploads/space/2017/0329/095118_fqsy_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/095118_fqsy_3203872.png</a><br><a href="https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png</a><br>第三处：<br><a href="https://static.oschina.net/uploads/space/2017/0329/095239_9NmQ_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/095239_9NmQ_3203872.png</a><br><a href="https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png</a></p>
-<h2 id="3、修改bin下的启动文件"><a href="#3、修改bin下的启动文件" class="headerlink" title="3、修改bin下的启动文件"></a>3、修改bin下的启动文件</h2><p>分别进入tomcat/bin目录，修改 startup.bat</p>
-<p>在文件第一行添加如下配置（添加时删除#注释，在startup.bat文件中rem代表注释）：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tomcat名称</span></span><br><span class="line"><span class="builtin-name">set</span> <span class="attribute">TITLE</span>=<span class="string">"tomcat1"</span></span><br><span class="line"><span class="comment"># tomcat启动路径</span></span><br><span class="line"><span class="builtin-name">set</span> <span class="attribute">CATALINA_BASE</span>=<span class="string">"D:\tools\tomcat1"</span></span><br><span class="line"><span class="builtin-name">set</span> <span class="attribute">CATALINA_HOME</span>=<span class="string">"D:\tools\tomcat1"</span></span><br><span class="line"><span class="comment"># JDK所在路径，如果环境变量已经配置，则可忽略，前提是你所有tomcat要共用一个jdk。另外如果设置，此处路径不能有空格</span></span><br><span class="line"><span class="builtin-name">SET</span> <span class="attribute">JAVA_HOME</span>=<span class="string">"D:\Java\jdk1.7.0_45"</span></span><br></pre></td></tr></table></figure></p>
-<p>如图：<br><a href="https://static.oschina.net/uploads/space/2017/0329/170630_Ttmb_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/170630_Ttmb_3203872.png</a></p>
-<h2 id="4、启动Tomcat"><a href="#4、启动Tomcat" class="headerlink" title="4、启动Tomcat"></a>4、启动Tomcat</h2><p>直接双击startup.bat即可，但是为了查看配置信息，可以在cmd中启动。</p>
-<h2 id="5、访问tomcat"><a href="#5、访问tomcat" class="headerlink" title="5、访问tomcat"></a>5、访问tomcat</h2><p>在浏览器地址栏输入：<a href="http://localhost:8081" target="_blank" rel="noopener">http://localhost:8081</a> 和 <a href="http://localhost:8082" target="_blank" rel="noopener">http://localhost:8082</a></p>
-
+        <h2 id="1、前期准备"><a href="#1、前期准备" class="headerlink" title="1、前期准备"></a>1、前期准备</h2><p>首先去apache tomcat官网下载一个tomcat解压版。<br><img src="https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png" alt><br>解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……<br><img src="https://static.oschina.net/uploads/space/2017/0328/160419_P4o4_3203872.png" alt><br>
+        
+          <a class="article-more-a" href="/2019/05/17/一台机器同时启动多个Tomcat/#more">more >></a>
+        
       
 
       
-    </div>
+    </p></div>
     <div class="article-info article-info-index">
       
       
@@ -432,6 +490,100 @@
 
 
   
+    <article id="post-深入理解虚拟机之Java内存区域" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/26/深入理解虚拟机之Java内存区域/">深入理解虚拟机之Java内存区域</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/26/深入理解虚拟机之Java内存区域/" class="archive-article-date">
+  	<time datetime="2019-02-26T03:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="基本问题："><a href="#基本问题：" class="headerlink" title="基本问题："></a>基本问题：</h2><ul>
+<li><strong>介绍下 Java 内存区域（运行时数据区）</strong></li>
+<li><strong>Java 对象的创建过程（五步，能默写出来并且要知道每一步虚拟机做了什么）</strong></li>
+<li><strong>对象的访问定位的两种方式（句柄和直接指针两种方式）</strong></li>
+<li><strong>String类和常量池</strong></li>
+<li><strong>8种基本类型的包装类和常量池</strong></li>
+</ul>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像C/C++程序开发程序员这样为内一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。<br>
+        
+          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之Java内存区域/#more">more >></a>
+        
+      
+
+      
+    </p></div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之Java内存区域/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-深入理解虚拟机之垃圾回收" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -510,100 +662,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之垃圾回收/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-深入理解虚拟机之Java内存区域" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/26/深入理解虚拟机之Java内存区域/">深入理解虚拟机之Java内存区域</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/26/深入理解虚拟机之Java内存区域/" class="archive-article-date">
-  	<time datetime="2019-02-26T03:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="基本问题："><a href="#基本问题：" class="headerlink" title="基本问题："></a>基本问题：</h2><ul>
-<li><strong>介绍下 Java 内存区域（运行时数据区）</strong></li>
-<li><strong>Java 对象的创建过程（五步，能默写出来并且要知道每一步虚拟机做了什么）</strong></li>
-<li><strong>对象的访问定位的两种方式（句柄和直接指针两种方式）</strong></li>
-<li><strong>String类和常量池</strong></li>
-<li><strong>8种基本类型的包装类和常量池</strong></li>
-</ul>
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像C/C++程序开发程序员这样为内一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。<br>
-        
-          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之Java内存区域/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之Java内存区域/">展开全文 >></a>
         </p>
       
 

@@ -6,20 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://drunkenroger.github.io">
-  <title>深入理解虚拟机之Java内存区域 | DrunkenRoger&#39;s 博客</title>
+  <title>一台机器同时启动多个Tomcat | DrunkenRoger&#39;s 博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1、前期准备首先去apache tomcat官网下载一个tomcat解压版。https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……https://static.oschina.net/uploads/space/2017/">
+  <meta name="description" content="1、前期准备首先去apache tomcat官网下载一个tomcat解压版。解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……">
 <meta name="keywords" content="分布式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深入理解虚拟机之Java内存区域">
+<meta property="og:title" content="一台机器同时启动多个Tomcat">
 <meta property="og:url" content="https://drunkenroger.github.io/2019/05/17/一台机器同时启动多个Tomcat/index.html">
 <meta property="og:site_name" content="DrunkenRoger&#39;s 博客">
-<meta property="og:description" content="1、前期准备首先去apache tomcat官网下载一个tomcat解压版。https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……https://static.oschina.net/uploads/space/2017/">
+<meta property="og:description" content="1、前期准备首先去apache tomcat官网下载一个tomcat解压版。解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-17T08:07:13.356Z">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0328/160419_P4o4_3203872.png">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0328/160549_uR0Y_3203872.png">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0329/094952_RXZx_3203872.png">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0329/171532_GBJ7_3203872.png">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0329/095118_fqsy_3203872.png">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0329/095239_9NmQ_3203872.png">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png">
+<meta property="og:image" content="https://static.oschina.net/uploads/space/2017/0329/170630_Ttmb_3203872.png">
+<meta property="og:updated_time" content="2019-05-17T09:01:05.427Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深入理解虚拟机之Java内存区域">
-<meta name="twitter:description" content="1、前期准备首先去apache tomcat官网下载一个tomcat解压版。https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……https://static.oschina.net/uploads/space/2017/">
+<meta name="twitter:title" content="一台机器同时启动多个Tomcat">
+<meta name="twitter:description" content="1、前期准备首先去apache tomcat官网下载一个tomcat解压版。解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……">
+<meta name="twitter:image" content="https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png">
   
     <link rel="alternative" href="/atom.xml" title="DrunkenRoger&#39;s 博客" type="application/atom+xml">
   
@@ -162,7 +173,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      深入理解虚拟机之Java内存区域
+      一台机器同时启动多个Tomcat
     </h1>
   
 
@@ -175,11 +186,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1、前期准备"><a href="#1、前期准备" class="headerlink" title="1、前期准备"></a>1、前期准备</h2><p>首先去apache tomcat官网下载一个tomcat解压版。<br><a href="https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png</a><br>解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……<br><a href="https://static.oschina.net/uploads/space/2017/0328/160419_P4o4_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0328/160419_P4o4_3203872.png</a></p>
-<h2 id="2、修改server-xml配置文件"><a href="#2、修改server-xml配置文件" class="headerlink" title="2、修改server.xml配置文件"></a>2、修改server.xml配置文件</h2><p><strong>分别进入tomcat/conf/目录，修改server.xml，一共三处。</strong><br><a href="https://static.oschina.net/uploads/space/2017/0328/160549_uR0Y_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0328/160549_uR0Y_3203872.png</a><br>第一处：<br><a href="https://static.oschina.net/uploads/space/2017/0329/094952_RXZx_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/094952_RXZx_3203872.png</a><br><a href="https://static.oschina.net/uploads/space/2017/0329/171532_GBJ7_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/171532_GBJ7_3203872.png</a><br>第二处、tomcat访问端口号：<br><a href="https://static.oschina.net/uploads/space/2017/0329/095118_fqsy_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/095118_fqsy_3203872.png</a><br><a href="https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png</a><br>第三处：<br><a href="https://static.oschina.net/uploads/space/2017/0329/095239_9NmQ_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/095239_9NmQ_3203872.png</a><br><a href="https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png</a></p>
+        <h2 id="1、前期准备"><a href="#1、前期准备" class="headerlink" title="1、前期准备"></a>1、前期准备</h2><p>首先去apache tomcat官网下载一个tomcat解压版。<br><img src="https://static.oschina.net/uploads/space/2017/0328/160127_sJXZ_3203872.png" alt><br>解压该压缩包，生成n份tomcat 分别命名为 tomcat1，tomcat2，……<br><img src="https://static.oschina.net/uploads/space/2017/0328/160419_P4o4_3203872.png" alt><br><a id="more"></a></p>
+<h2 id="2、修改server-xml配置文件"><a href="#2、修改server-xml配置文件" class="headerlink" title="2、修改server.xml配置文件"></a>2、修改server.xml配置文件</h2><p><strong>分别进入tomcat/conf/目录，修改server.xml，一共三处。</strong><br><img src="https://static.oschina.net/uploads/space/2017/0328/160549_uR0Y_3203872.png" alt><br>第一处：<br><img src="https://static.oschina.net/uploads/space/2017/0329/094952_RXZx_3203872.png" alt><br><img src="https://static.oschina.net/uploads/space/2017/0329/171532_GBJ7_3203872.png" alt><br>第二处、tomcat访问端口号：<br><img src="https://static.oschina.net/uploads/space/2017/0329/095118_fqsy_3203872.png" alt><br><img src="https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png" alt><br>第三处：<br><img src="https://static.oschina.net/uploads/space/2017/0329/095239_9NmQ_3203872.png" alt><br><img src="https://static.oschina.net/uploads/space/2017/0329/171631_jvVs_3203872.png" alt></p>
 <h2 id="3、修改bin下的启动文件"><a href="#3、修改bin下的启动文件" class="headerlink" title="3、修改bin下的启动文件"></a>3、修改bin下的启动文件</h2><p>分别进入tomcat/bin目录，修改 startup.bat</p>
 <p>在文件第一行添加如下配置（添加时删除#注释，在startup.bat文件中rem代表注释）：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tomcat名称</span></span><br><span class="line"><span class="builtin-name">set</span> <span class="attribute">TITLE</span>=<span class="string">"tomcat1"</span></span><br><span class="line"><span class="comment"># tomcat启动路径</span></span><br><span class="line"><span class="builtin-name">set</span> <span class="attribute">CATALINA_BASE</span>=<span class="string">"D:\tools\tomcat1"</span></span><br><span class="line"><span class="builtin-name">set</span> <span class="attribute">CATALINA_HOME</span>=<span class="string">"D:\tools\tomcat1"</span></span><br><span class="line"><span class="comment"># JDK所在路径，如果环境变量已经配置，则可忽略，前提是你所有tomcat要共用一个jdk。另外如果设置，此处路径不能有空格</span></span><br><span class="line"><span class="builtin-name">SET</span> <span class="attribute">JAVA_HOME</span>=<span class="string">"D:\Java\jdk1.7.0_45"</span></span><br></pre></td></tr></table></figure></p>
-<p>如图：<br><a href="https://static.oschina.net/uploads/space/2017/0329/170630_Ttmb_3203872.png" target="_blank" rel="noopener">https://static.oschina.net/uploads/space/2017/0329/170630_Ttmb_3203872.png</a></p>
+<p>如图：<br><img src="https://static.oschina.net/uploads/space/2017/0329/170630_Ttmb_3203872.png" alt></p>
 <h2 id="4、启动Tomcat"><a href="#4、启动Tomcat" class="headerlink" title="4、启动Tomcat"></a>4、启动Tomcat</h2><p>直接双击startup.bat即可，但是为了查看配置信息，可以在cmd中启动。</p>
 <h2 id="5、访问tomcat"><a href="#5、访问tomcat" class="headerlink" title="5、访问tomcat"></a>5、访问tomcat</h2><p>在浏览器地址栏输入：<a href="http://localhost:8081" target="_blank" rel="noopener">http://localhost:8081</a> 和 <a href="http://localhost:8082" target="_blank" rel="noopener">http://localhost:8082</a></p>
 
@@ -275,6 +286,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/05/17/Nginx-Tomcat配置负载均衡集群/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Nginx+Tomcat配置负载均衡集群
+        
+      </div>
+    </a>
   
   
     <a href="/2019/02/26/深入理解虚拟机之虚拟机类加载机制/" id="article-nav-older" class="article-nav-link-wrap">
