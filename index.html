@@ -482,6 +482,100 @@
 
 
   
+    <article id="post-深入理解虚拟机之Java内存区域" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/26/深入理解虚拟机之Java内存区域/">深入理解虚拟机之Java内存区域</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/26/深入理解虚拟机之Java内存区域/" class="archive-article-date">
+  	<time datetime="2019-02-26T03:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="基本问题："><a href="#基本问题：" class="headerlink" title="基本问题："></a>基本问题：</h2><ul>
+<li><strong>介绍下 Java 内存区域（运行时数据区）</strong></li>
+<li><strong>Java 对象的创建过程（五步，能默写出来并且要知道每一步虚拟机做了什么）</strong></li>
+<li><strong>对象的访问定位的两种方式（句柄和直接指针两种方式）</strong></li>
+<li><strong>String类和常量池</strong></li>
+<li><strong>8种基本类型的包装类和常量池</strong></li>
+</ul>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像C/C++程序开发程序员这样为内一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。<br>
+        
+          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之Java内存区域/#more">more >></a>
+        
+      
+
+      
+    </p></div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之Java内存区域/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-深入理解虚拟机之垃圾回收" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -560,100 +654,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之垃圾回收/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-深入理解虚拟机之Java内存区域" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/26/深入理解虚拟机之Java内存区域/">深入理解虚拟机之Java内存区域</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/26/深入理解虚拟机之Java内存区域/" class="archive-article-date">
-  	<time datetime="2019-02-26T03:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="基本问题："><a href="#基本问题：" class="headerlink" title="基本问题："></a>基本问题：</h2><ul>
-<li><strong>介绍下 Java 内存区域（运行时数据区）</strong></li>
-<li><strong>Java 对象的创建过程（五步，能默写出来并且要知道每一步虚拟机做了什么）</strong></li>
-<li><strong>对象的访问定位的两种方式（句柄和直接指针两种方式）</strong></li>
-<li><strong>String类和常量池</strong></li>
-<li><strong>8种基本类型的包装类和常量池</strong></li>
-</ul>
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像C/C++程序开发程序员这样为内一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。<br>
-        
-          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之Java内存区域/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM读书笔记//" class="article-tag-list-link color3">JVM读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/26/深入理解虚拟机之Java内存区域/">展开全文 >></a>
         </p>
       
 
