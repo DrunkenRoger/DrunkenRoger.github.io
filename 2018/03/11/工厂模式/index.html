@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://drunkenroger.github.io">
-  <title>Archives: 2018/7 | DrunkenRoger&#39;s 博客</title>
+  <title>每天一个设计模式————简单工厂vs抽象工厂 | DrunkenRoger&#39;s 博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="DrunkenRoger&#39;s 博客">
-<meta property="og:url" content="https://drunkenroger.github.io/archives/2018/07/index.html">
+  <meta name="description" content="了解哪些设计模式说一下 简单工厂抽象工厂有什么区别一、简单工厂模式 这个模式本身很简单而且使用在业务较简单的情况下。一般用于小项目或者具体产品很少扩展的情况（这样工厂类才不用经常更改）。 它由三种角色组成：  工厂类角色：这是本模式的核心，含有一定的商业逻辑和判断逻辑，根据逻辑不同，产生具体的工厂产品。如例子中的Driver类。 抽象产品角色：它一般是具体产品继承的父类或者实现的接口。由接口或者抽">
+<meta name="keywords" content="创建型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每天一个设计模式————简单工厂vs抽象工厂">
+<meta property="og:url" content="https://drunkenroger.github.io/2018/03/11/工厂模式/index.html">
 <meta property="og:site_name" content="DrunkenRoger&#39;s 博客">
+<meta property="og:description" content="了解哪些设计模式说一下 简单工厂抽象工厂有什么区别一、简单工厂模式 这个模式本身很简单而且使用在业务较简单的情况下。一般用于小项目或者具体产品很少扩展的情况（这样工厂类才不用经常更改）。 它由三种角色组成：  工厂类角色：这是本模式的核心，含有一定的商业逻辑和判断逻辑，根据逻辑不同，产生具体的工厂产品。如例子中的Driver类。 抽象产品角色：它一般是具体产品继承的父类或者实现的接口。由接口或者抽">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-25T06:55:35.160Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DrunkenRoger&#39;s 博客">
+<meta name="twitter:title" content="每天一个设计模式————简单工厂vs抽象工厂">
+<meta name="twitter:description" content="了解哪些设计模式说一下 简单工厂抽象工厂有什么区别一、简单工厂模式 这个模式本身很简单而且使用在业务较简单的情况下。一般用于小项目或者具体产品很少扩展的情况（这样工厂类才不用经常更改）。 它由三种角色组成：  工厂类角色：这是本模式的核心，含有一定的商业逻辑和判断逻辑，根据逻辑不同，产生具体的工厂产品。如例子中的Driver类。 抽象产品角色：它一般是具体产品继承的父类或者实现的接口。由接口或者抽">
   
     <link rel="alternative" href="/atom.xml" title="DrunkenRoger&#39;s 博客" type="application/atom+xml">
   
@@ -150,71 +155,204 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-工厂模式" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/06/排序/" class="archive-article-date">
-  	<time datetime="2018-07-06T01:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/06/排序/">算法思想————排序</a>
+    <h1 class="article-title" itemprop="name">
+      每天一个设计模式————简单工厂vs抽象工厂
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/03/11/工厂模式/" class="archive-article-date">
+  	<time datetime="2018-03-11T07:59:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="了解哪些设计模式说一下-简单工厂抽象工厂有什么区别"><a href="#了解哪些设计模式说一下-简单工厂抽象工厂有什么区别" class="headerlink" title="了解哪些设计模式说一下 简单工厂抽象工厂有什么区别"></a>了解哪些设计模式说一下 简单工厂抽象工厂有什么区别</h3><p>一、<strong>简单工厂模式</strong><br> 这个模式本身很简单而且使用在业务较简单的情况下。一般用于小项目或者具体产品很少扩展的情况（这样工厂类才不用经常更改）。<br> <strong>它由三种角色组成：</strong></p>
+<blockquote>
+<p><strong>工厂类角色</strong>：这是本模式的核心，含有一定的商业逻辑和判断逻辑，根据逻辑不同，产生具体的工厂产品。如例子中的Driver类。<br> <strong>抽象产品角色</strong>：它一般是具体产品继承的父类或者实现的接口。由接口或者抽象类来实现。如例中的Car接口。<br> <strong>具体产品角色</strong>：工厂类所创建的对象就是此角色的实例。在java中由一个具体类实现，如例子中的Benz、Bmw类。<br><a id="more"></a></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProduct</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProduct1</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProduct2</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">createProduct</span><span class="params">(<span class="keyword">int</span> type)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (type == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProduct1();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProduct2();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProduct();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SimpleFactory simpleFactory = <span class="keyword">new</span> SimpleFactory();</span><br><span class="line">        Product product = simpleFactory.createProduct(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">// do something with the product</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>这便是简单工厂模式了。那么它带了了什么好处呢？</strong><br> 首先，符合现实中的情况；而且客户端免除了直接创建产品对象的责任，而仅仅负责“消费”产品。<br> 下面我们从开闭原则上来分析下简单工厂模式。<strong>当增加了一辆车的时候，只要符合抽象产品制定的合同，那么只要通知工厂类知道就可以被客户使用了。（即创建一个新的车类，继承抽象产品Car）那么 对于产品部分来说，它是符合开闭原则的——对扩展开放、对修改关闭；但是工厂类不太理想，因为每增加一辆车，都要在工厂类中增加相应的商业逻辑和判 断逻辑，这显自然是违背开闭原则的。</strong><br> 正如我前面提到的简单工厂模式适用于业务简单的情况下或者具体产品很少增加的情况。<strong>而对于复杂的业务环境可能不太适应了。这就应该由工厂方法模式来出场了！！</strong></p>
+<p>二、<strong>工厂方法模式</strong><br> <strong>它由四种角色组成：</strong></p>
+<blockquote>
+<p><strong>抽象工厂角色</strong>： 这是工厂方法模式的核心，它与应用程序无关。是具体工厂角色必须实现的接口或者必须继承的父类。在java中它由抽象类或者接口来实现。<br> <strong>具体工厂角色</strong>：它含有和具体业务逻辑有关的代码。由应用程序调用以创建对应的具体产品的对象。在java中它由具体的类来实现。<br> <strong>抽象产品角色</strong>：它是具体产品继承的父类或者是实现的接口。在java中一般有抽象类或者接口来实现。<br> <strong>具体产品角色</strong>：具体工厂角色所创建的对象就是此角色的实例。在java中由具体的类来实现。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Product product = factoryMethod();</span><br><span class="line">        <span class="comment">// do something with the product</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProduct();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory1</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProduct1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory2</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProduct2();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用开闭原则来分析下工厂方法模式。当有新的产品（即暴发户的汽车）产生时，只要按照抽象产品角色、抽象工厂角色提供的合同来生成，那么就可以被客户使用，而不必去修改任何已有的代码。（即当有新产品时，只要创建并基础抽象产品；新建具体工厂继承抽象工厂；而不用修改任何一个类）<strong>工厂方法模式是完全符合开闭原则的</strong>！<br> 使用工厂方法模式足以应付我们可能遇到的大部分业务需求。<strong>但是当产品种类非常多时，就会出现大量的与之对应的工厂类，这不应该是我们所希望的。所以我建议在这种情况下使用简单工厂模式与工厂方法模式相结合的方式来减少工厂类：即对于产品树上类似的种类（一般是树的叶子中互为兄弟的）使用简单工厂模式来实现。</strong><br> 当然特殊的情况，就要特殊对待了：对于系统中存在不同的产品树，而且产品树上存在产品族（下一节将解释这个名词）。那么这种情况下就可能可以使用抽象工厂模式了。</p>
+<p>三、<strong>抽象工厂模式</strong><br> <strong>先来认识下什么是产品族： 位于不同产品等级结构中，功能相关联的产品组成的家族。</strong></p>
+<blockquote>
+<p><strong>BmwCar和BenzCar就是两个产品树（产品层次结构）；而BenzSportsCar和BmwSportsCar就是一个产品族。他们都可以放到跑车家族中，因此功能有所关联。同理BmwBussinessCar和BenzBusinessCar也是一个产品族。</strong></p>
+</blockquote>
+<p>可以这么说，它和工厂方法模式的区别就在于需要创建对象的复杂程度上。而且抽象工厂模式是三个里面最为抽象、最具一般性的。抽象工厂模式的用意为：给客户端提供一个接口，可以创建多个产品族中的产品对象。<br> 而且使用抽象工厂模式还要满足一下条件：</p>
+<blockquote>
+<p>1.<strong>系统中有多个产品族，而系统一次只可能消费其中一族产品</strong><br> 2.<strong>同属于同一个产品族的产品以其使用。</strong></p>
+</blockquote>
+<p><strong>来看看抽象工厂模式的各个角色（和工厂方法的如出一辙）：</strong></p>
+<blockquote>
+<p><strong>抽象工厂角色</strong>： 这是工厂方法模式的核心，它与应用程序无关。是具体工厂角色必须实现的接口或者必须继承的父类。在java中它由抽象类或者接口来实现。<br> <strong>具体工厂角色</strong>：它含有和具体业务逻辑有关的代码。由应用程序调用以创建对应的具体产品的对象。在java中它由具体的类来实现。<br> <strong>抽象产品角色</strong>：它是具体产品继承的父类或者是实现的接口。在java中一般有抽象类或者接口来实现。<br> <strong>具体产品角色</strong>：具体工厂角色所创建的对象就是此角色的实例。在java中由具体的类来实现。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractProductB</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductA1</span> <span class="keyword">extends</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductA2</span> <span class="keyword">extends</span> <span class="title">AbstractProductA</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductB1</span> <span class="keyword">extends</span> <span class="title">AbstractProductB</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductB2</span> <span class="keyword">extends</span> <span class="title">AbstractProductB</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> AbstractProductA <span class="title">createProductA</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> AbstractProductB <span class="title">createProductB</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory1</span> <span class="keyword">extends</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">    <span class="function">AbstractProductA <span class="title">createProductA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ProductA1();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">AbstractProductB <span class="title">createProductB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ProductB1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory2</span> <span class="keyword">extends</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">    <span class="function">AbstractProductA <span class="title">createProductA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ProductA2();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">AbstractProductB <span class="title">createProductB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ProductB2();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        AbstractFactory abstractFactory = <span class="keyword">new</span> ConcreteFactory1();</span><br><span class="line">        AbstractProductA productA = abstractFactory.createProductA();</span><br><span class="line">        AbstractProductB productB = abstractFactory.createProductB();</span><br><span class="line">        <span class="comment">// do something with productA and productB</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>抽象工厂模式的缺点</strong>：如果需要增加新的产品树，那么就要新增三个产品类，比如VolvoCar，VolvoSportCar,VolvoSportCar，并且要修改三个工厂类。<strong>这样大批量的改动是很丑陋的做法。</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">basic</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">创建型</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/算法与数据结构//" class="article-tag-list-link color3">算法与数据结构</a>
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://drunkenroger.github.io/2018/03/11/工厂模式/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/03/12/生成器模式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          每天一个设计模式————建造者模式
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/03/10/单例模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">每天一个设计模式————单例模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#了解哪些设计模式说一下-简单工厂抽象工厂有什么区别"><span class="toc-number">1.</span> <span class="toc-text">了解哪些设计模式说一下 简单工厂抽象工厂有什么区别</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -241,8 +379,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
